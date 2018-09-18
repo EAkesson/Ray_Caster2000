@@ -10,5 +10,5 @@
 
 using Vertex = glm::vec4;
 using Direction = glm::vec3;
-using ColorDbl = std::array<int, 3>;
+using ColorDbl = glm::dvec3;
 
