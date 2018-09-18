@@ -12,6 +12,7 @@ public:
 	bool rayIntersection(Ray &r);
 
 	Triangle();
+	Triangle(Vertex &v1, Vertex &v2, Vertex &v3, ColorDbl &paint);
 	~Triangle();
 };
 
