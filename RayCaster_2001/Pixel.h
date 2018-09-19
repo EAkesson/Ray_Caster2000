@@ -5,6 +5,7 @@ class Pixel
 {
 
 public:
+
 	ColorDbl pixelColor;
 	Ray *intersector;
 	

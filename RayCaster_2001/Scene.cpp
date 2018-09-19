@@ -4,13 +4,27 @@
 
 Scene::Scene()
 {
+	buildScene();  // set up all vertecies
+
 
 }
 void Scene::buildScene()
 {
-	sceneMesh[0] = new Triangle(Vertex(-3, 0, 5, 0), Vertex(0, 6, -5, 0), Vertex(0, -6, -5, 0), ColorDbl(1, 1, 1));
+	//Bottom
+	sceneMesh[0] = new Triangle(Vertex(-3, 0, -5, 0), Vertex(0, 6, -5, 0), Vertex(0, -6, -5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[1] = new Triangle(Vertex(0, 6, -5, 0), Vertex(5, 0, -5, 0), Vertex(0, -6, -5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[2] = new Triangle(Vertex(0, 6, -5, 0), Vertex(10, 6, -5, 0), Vertex(5, 0, -5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[3] = new Triangle(Vertex(10, 6, -5, 0), Vertex(10, -6, -5, 0), Vertex(5, 0, -5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[4] = new Triangle(Vertex(10, 6, -5, 0), Vertex(13, 0, -5, 0), Vertex(10, -6, -5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[5] = new Triangle(Vertex(5, 0, -5, 0), Vertex(10, -6, -5, 0), Vertex(0, -6, -5, 0), ColorDbl(1, 1, 1));
 
-
+	//Top
+	sceneMesh[6] = new Triangle(Vertex(0, -6, 5, 0), Vertex(0, 6, 5, 0), Vertex(-3, 0, 5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[7] = new Triangle(Vertex(0, -6, 5, 0), Vertex(5, 0, 5, 0), Vertex(0, 6, 5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[8] = new Triangle(Vertex(5, 0, 5, 0), Vertex(10, 6, 5, 0), Vertex(0, 6, 5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[9] = new Triangle(Vertex(5, 0, 5, 0), Vertex(10, -6, 5, 0), Vertex(10, 6, 5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[10] = new Triangle(Vertex(10, -6, 5, 0), Vertex(13, 0, 5, 0), Vertex(10, 6, 5, 0), ColorDbl(1, 1, 1));
+	sceneMesh[11] = new Triangle(Vertex(0, -6, 5, 0), Vertex(10, -6, 5, 0), Vertex(5, 0, 5, 0), ColorDbl(1, 1, 1));
 
 	//W1
 	sceneMesh[12] = new Triangle(Vertex(0, -6, 5, 0), Vertex(-3, 0, 5, 0), Vertex(-3, 0, -5, 0), ColorDbl(0.1, 0.9, 0.1));

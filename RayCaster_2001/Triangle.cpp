@@ -4,6 +4,7 @@
 
 Triangle::Triangle()
 {
+
 }
 
 Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint)
@@ -17,4 +18,5 @@ Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint)
 
 Triangle::~Triangle()
 {
+
 }
