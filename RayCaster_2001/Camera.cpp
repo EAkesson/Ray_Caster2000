@@ -5,6 +5,7 @@
 Camera::Camera()
 {
 	std::cout << "im here once" << std::endl;
+	fieldImage = new Pixel[imageSize * imageSize];
 }
 
 void Camera::convertColorLinear(ColorDbl iMax)
@@ -23,12 +24,12 @@ void Camera::convertColorLinear(ColorDbl iMax)
 
 		for (int j = 0; j < imageSize; j++)
 		{
-			fieldImage[i][j].pixelColor = ColorDbl(j /(i+1), (j / 2 *( i+1)), (j / 3 * (i+1)));
+			fieldImage[i*j].pixelColor = ColorDbl(j /(i+1), (j / 2 *( i+1)), (j / 3 * (i+1)));
 
 			
 
 			ColorDbl temp;
-			temp = fieldImage[i][j].pixelColor * (255.99 / iMax);
+			temp = fieldImage[i*j].pixelColor * (255.99 / iMax);
 			
 				
 			img << temp.x << " " << temp.y << " " << temp.z << std::endl;
@@ -53,8 +54,8 @@ void Camera::createImage()
 
 		for (int j = 0; j < imageSize; j++)
 		{
-			if (fieldImage[i][j].pixelColor.length > iMax.length)
-				iMax = fieldImage[i][j].pixelColor;
+			if (fieldImage[i*j].pixelColor.length > iMax.length)
+				iMax = fieldImage[i*j].pixelColor;
 
 		}
 
