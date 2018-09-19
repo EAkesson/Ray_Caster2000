@@ -9,7 +9,7 @@ public:
 	ColorDbl triangleColor;
 	Direction normal;
 
-	bool rayIntersection(Ray &r);
+	bool rayIntersection(Ray *r);
 
 	Triangle();
 	Triangle(Vertex &v1, Vertex &v2, Vertex &v3, ColorDbl &paint);

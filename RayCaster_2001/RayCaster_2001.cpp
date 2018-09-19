@@ -9,8 +9,11 @@ int main()
 {
 
 	Camera cam = Camera();
-
-	cam.convertColorLinear(ColorDbl(1,1,1));
+	Scene scene = Scene();
+	scene.buildScene();
+	cam.render(scene);
+	cam.createImage();
+	//cam.convertColorLinear(ColorDbl(1,1,1));
 
 	
 	

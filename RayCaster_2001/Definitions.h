@@ -8,7 +8,7 @@
 #include "stdafx.h"
 
 
-using Vertex = glm::vec4;
-using Direction = glm::vec3;
+using Vertex = glm::fvec4;
+using Direction = glm::fvec3;
 using ColorDbl = glm::dvec3;
 

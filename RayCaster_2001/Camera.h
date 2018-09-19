@@ -1,10 +1,13 @@
 #pragma once
 #include "Definitions.h"
 #include "Pixel.h"
+#include "Scene.h"
+
 class Camera
 {
 public:
 	const static int imageSize = 800;
+	const static int amountOfPixel = imageSize * imageSize;
 	Vertex eyePoint[2] = { Vertex(-2.0f, 0.0f, 0.0f, 0.0f), Vertex(-1.0f, 0.0f, 0.0f, 0.0f) };
 	Vertex cameraPlane[4] = { Vertex(0.0f, -1.0f, -1.0f, 0.0f), Vertex(0.0f, 1.0f, -1.0f, 0.0f),Vertex(0.0f, 1.0f, 0.0f, 1.0f), Vertex(0.0f, -1.0f, 1.0f, 0.0f) };
 
@@ -21,7 +24,7 @@ public:
 	void convertColorExpo();
 
 	void createImage();
-	void render();
+	void render(Scene scene);
 
 
 	~Camera();

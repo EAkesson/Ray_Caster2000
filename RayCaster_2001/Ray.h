@@ -9,6 +9,7 @@ public:
 
 
 	Ray();
+	Ray(Vertex s, Vertex e);
 	~Ray();
 };
 

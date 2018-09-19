@@ -7,7 +7,7 @@ class Scene
 public:
 	Triangle *sceneMesh[24];
 
-	ColorDbl triangleScan(Ray &r);
+	ColorDbl triangleScan(Ray *r);
 
 	void buildScene();
 	Scene();

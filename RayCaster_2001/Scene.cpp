@@ -8,6 +8,19 @@ Scene::Scene()
 
 
 }
+ColorDbl Scene::triangleScan(Ray *r)
+{
+	for each (Triangle *tri in sceneMesh)
+	{
+		//TODO check all hit trinagles and choose the closest
+		if (tri->rayIntersection(r)) {
+			std::cout << tri->triangleColor.x << "|" << tri->triangleColor.y << "|" << tri->triangleColor.z << std::endl;
+			return(tri->triangleColor);
+		}
+		return(ColorDbl(0, 0, 0));
+	}
+	return ColorDbl();
+}
 void Scene::buildScene()
 {
 	//Bottom
