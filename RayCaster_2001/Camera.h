@@ -4,7 +4,7 @@
 class Camera
 {
 public:
-	const static int imageSize = 800;
+	const static int imageSize = 199;
 	Vertex eyePoint[2] = { Vertex(-2.0f, 0.0f, 0.0f, 0.0f), Vertex(-1.0f, 0.0f, 0.0f, 0.0f) };
 	Vertex cameraPlane[4] = { Vertex(0.0f, -1.0f, -1.0f, 0.0f), Vertex(0.0f, 1.0f, -1.0f, 0.0f),Vertex(0.0f, 1.0f, 0.0f, 1.0f), Vertex(0.0f, -1.0f, 1.0f, 0.0f) };
 	
@@ -12,7 +12,7 @@ public:
 
 	Pixel fieldImage[imageSize][imageSize];
 
-	glm::vec3 picture[imageSize][imageSize];
+	//glm::vec3 picture[imageSize][imageSize];
 
 	Camera();
 

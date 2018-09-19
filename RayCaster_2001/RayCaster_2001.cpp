@@ -7,29 +7,12 @@
 
 int main()
 {
-;
-glm::vec3 picture;
 
-	std::ofstream img("awesomepic.ppm");
-	img << "P3" << std::endl;
-	img << 800 << " " << 800 << std::endl;
-	img << "255" << std::endl;
+	Camera cam = Camera();
 
-	for (int i = 0; i < 800; i++)
-	{
+	cam.convertColorLinear(ColorDbl(1,1,1));
 
-		for (int j = 0; j < 800; j++)
-		{
-			//picture[i][j] = fieldImage[i][j].pixelColor * (255.99 / iMax);
-			picture = { i % 255, j % 255, i*j % 255 };
-
-			img << picture.x << " " << picture.y << " " << picture.z << std::endl;
-			std::cout << picture.x;
-		}
-
-	}
-
-	system("open awesomepic.ppm");
+	
 	
     return 0;
 }
