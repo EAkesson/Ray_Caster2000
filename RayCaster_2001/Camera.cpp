@@ -11,6 +11,12 @@ Camera::Camera()
 
 void Camera::convertColorLinear(ColorDbl iMax)
 {
+	if (iMax.x == 0)
+		iMax.x = EPSILON;
+	if (iMax.y == 0)
+		iMax.y = EPSILON;
+	if (iMax.z == 0)
+		iMax.z = EPSILON;
 
 	std::cout << "im here once" << std::endl;
 
@@ -25,7 +31,7 @@ void Camera::convertColorLinear(ColorDbl iMax)
 			
 			ColorDbl temp;
 			temp = fieldImage[i].pixelColor * (255.99 / iMax);
-				
+			std::cout << iMax.x << "|" << iMax.y << "|" << iMax.z << std::endl;
 			img << temp.x << " " << temp.y << " " << temp.z << std::endl;
 	}
 
@@ -37,11 +43,12 @@ void Camera::convertColorExpo()
 
 void Camera::createImage()
 {
-	ColorDbl iMax = { 0,0,0 };
+	ColorDbl iMax = { EPSILON,EPSILON,EPSILON };
 	//find the maximum intensity
 	for (int i = 0; i < amountOfPixel; i++)
 	{
-		if (fieldImage[i].pixelColor.length > iMax.length)
+		//std::cout << glm::length(fieldImage[i].pixelColor) << " | " << glm::length(iMax) << std::endl;
+		if (glm::length(fieldImage[i].pixelColor) > glm::length(iMax))
 			iMax = fieldImage[i].pixelColor;
 	}
 
@@ -50,7 +57,8 @@ void Camera::createImage()
 
 void Camera::render(Scene scene)
 {
-	float pixelSize = 0.0025;
+	//float pixelSize = 0.0025;
+	float pixelSize = 2/ imageSize;
 	float pixelMiddel = pixelSize / 2;
 	float x = 0;
 	float y = pixelMiddel;

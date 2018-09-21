@@ -8,6 +8,7 @@
 #include "stdafx.h"
 
 
+const float EPSILON = 0.0000001f;
 using Vertex = glm::fvec4;
 using Direction = glm::fvec3;
 using ColorDbl = glm::dvec3;
