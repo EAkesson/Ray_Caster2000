@@ -3,6 +3,7 @@
 
 
 
+
 Camera::Camera()
 {
 	std::cout << "im here once" << std::endl;
@@ -31,7 +32,7 @@ void Camera::convertColorLinear(ColorDbl iMax)
 			
 			ColorDbl temp;
 			temp = fieldImage[i].pixelColor * (255.99 / iMax);
-			std::cout << iMax.x << "|" << iMax.y << "|" << iMax.z << std::endl;
+			//std::cout << iMax.x << "|" << iMax.y << "|" << iMax.z << std::endl;
 			img << temp.x << " " << temp.y << " " << temp.z << std::endl;
 	}
 
@@ -58,26 +59,30 @@ void Camera::createImage()
 void Camera::render(Scene scene)
 {
 	//float pixelSize = 0.0025;
-	float pixelSize = 2/ imageSize;
+	float pixelSize = 2/ (float)imageSize;
 	float pixelMiddel = pixelSize / 2;
 	float x = 0;
-	float y = pixelMiddel;
-	float z = pixelMiddel;
+	float y = -1 + pixelMiddel;
+	float z = 1 + pixelMiddel;
 	Ray *tracer;
 
 
 	for (int i = 0; i < amountOfPixel; i++)
 	{
+		
+		
 		tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0));
 		fieldImage[i].intersector = tracer;
+
+		//std::cout << tracer->end.x << tracer->end.y << tracer->end.z << std::endl;
 		ColorDbl cl = scene.triangleScan(tracer);
 		fieldImage[i].pixelColor = cl;
 		//DO stuff
 
 		if (i % imageSize == 0 && i != 0)
 		{
-			y = pixelMiddel;
-			z += pixelSize;
+			y = -1 + pixelMiddel;
+			z -= pixelSize;
 		}
 		else 
 		{
