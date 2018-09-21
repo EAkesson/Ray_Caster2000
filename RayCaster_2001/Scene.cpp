@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Tetrahedron.h"
 
 
 
@@ -66,6 +67,8 @@ void Scene::buildScene()
 	//W6
 	sceneMesh[22] = new Triangle(Vertex(-3, 0, 5, 0), Vertex(0, 6, 5, 0), Vertex(0, 6, -5, 0), ColorDbl(0.2, 0, 0.3));
 	sceneMesh[23] = new Triangle(Vertex(-3, 0, 5, 0), Vertex(0, 6, -5, 0), Vertex(-3, 0, -5, 0), ColorDbl(0.2, 0, 0.3));
+
+	objects[0] = new Tetrahedron(Vertex(4, -1, 3, 0), Vertex(5, -2, -1, 0), Vertex(4, 0, -1, 0), Vertex(3, -2, -1, 0), ColorDbl(0.2, 0.3, 1));
 
 }
 
