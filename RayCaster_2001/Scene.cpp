@@ -18,6 +18,19 @@ ColorDbl Scene::triangleScan(Ray *r)
 			return(sceneMesh[i]->triangleColor);
 		}
 	}
+
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (objects[0].triangles->rayIntersection(r)) 
+		{
+
+			//std::cout << sceneMesh[i]->triangleColor.x << "|" << sceneMesh[i]->triangleColor.y << "|" << sceneMesh[i]->triangleColor.z << std::endl;
+			//std::cout << i << std::endl;
+			return(objects[0].triangles->triangleColor);
+		}
+	}
+
 	return(ColorDbl(0, 0, 0));
 
 	//for each (Triangle *tri in sceneMesh)
@@ -30,6 +43,8 @@ ColorDbl Scene::triangleScan(Ray *r)
 	//	
 	//}
 	//return(ColorDbl(0, 0, 0));
+	
+	
 }
 void Scene::buildScene()
 {
@@ -68,7 +83,7 @@ void Scene::buildScene()
 	sceneMesh[22] = new Triangle(Vertex(-3, 0, 5, 0), Vertex(0, 6, 5, 0), Vertex(0, 6, -5, 0), ColorDbl(0.2, 0, 0.3));
 	sceneMesh[23] = new Triangle(Vertex(-3, 0, 5, 0), Vertex(0, 6, -5, 0), Vertex(-3, 0, -5, 0), ColorDbl(0.2, 0, 0.3));
 
-	objects[0] = new Tetrahedron(Vertex(4, -1, 3, 0), Vertex(5, -2, -1, 0), Vertex(4, 0, -1, 0), Vertex(3, -2, -1, 0), ColorDbl(0.2, 0.3, 1));
+	objects[0] =  Tetrahedron(Vertex(4, -1, 3, 0), Vertex(5, -2, -1, 0), Vertex(4, 0, -1, 0), Vertex(3, -2, -1, 0), ColorDbl(0.2, 0.3, 1));
 
 }
 

@@ -6,8 +6,7 @@ class SceneObjects
 {
 public:
 
-	Triangle *triangles;
-	Vertex  *vertecies;
+
 
 	 SceneObjects();
 	~SceneObjects();
