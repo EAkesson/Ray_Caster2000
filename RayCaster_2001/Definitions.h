@@ -8,7 +8,7 @@
 #include "stdafx.h"
 
 #define EPSILON 0.0000001f
-#define MAXILON 10000f
+#define MAXILON 10000.0f
 
 
 using Vertex = glm::fvec4;

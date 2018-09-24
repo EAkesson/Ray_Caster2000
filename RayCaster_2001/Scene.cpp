@@ -25,7 +25,6 @@ void Scene::triangleScan(Ray *r)
 				//return(tri->triangleColor);
 				break;
 			}
-
 		}
 	}
 	
