@@ -3,11 +3,9 @@
 #include "Definitions.h"
 #include "SceneObjects.h"
 
-class Tetrahedron 
+class Tetrahedron : public SceneObjects
 {
 public:
- 
-	Triangle triangles[4];
 
 	Tetrahedron();
 	Tetrahedron(Vertex &v1, Vertex &v2, Vertex &v3, Vertex &v4,ColorDbl &d );

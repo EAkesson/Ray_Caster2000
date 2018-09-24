@@ -11,7 +11,7 @@ public:
 	Triangle *sceneMesh[24];
 	Tetrahedron *objects;
 
-	ColorDbl triangleScan(Ray *r);
+	void triangleScan(Ray *r);
 
 	void buildScene();
 	Scene();

@@ -9,44 +9,21 @@ Scene::Scene()
 
 
 }
-ColorDbl Scene::triangleScan(Ray *r)
+
+void Scene::triangleScan(Ray *r)
 {
-
-	for (int i = 0; i < 4; i++)
+	for each (Triangle *tri in sceneMesh)
 	{
-		if (objects->triangles->rayIntersection(r))
-		{
-
-			//std::cout << sceneMesh[i]->triangleColor.x << "|" << sceneMesh[i]->triangleColor.y << "|" << sceneMesh[i]->triangleColor.z << std::endl;
-			//std::cout << i << std::endl;
-			return(objects->triangles->triangleColor);
+		//TODO check all hit trinagles and choose the closest
+		if (tri->rayIntersection(r)) {
+			//std::cout << tri->triangleColor.x << "|" << tri->triangleColor.y << "|" << tri->triangleColor.z << std::endl;
+			//return(tri->triangleColor);
+			break;
 		}
+		
 	}
-
-	for (int i = 0; i < 24; i++) {
-		if (sceneMesh[i]->rayIntersection(r)) {
-			//std::cout << sceneMesh[i]->triangleColor.x << "|" << sceneMesh[i]->triangleColor.y << "|" << sceneMesh[i]->triangleColor.z << std::endl;
-			//std::cout << i << std::endl;
-			return(sceneMesh[i]->triangleColor);
-		}
-	}
-
-
-	return(ColorDbl(0, 0, 0));
-
-	//for each (Triangle *tri in sceneMesh)
-	//{
-	//	//TODO check all hit trinagles and choose the closest
-	//	if (tri->rayIntersection(r)) {
-	//		//std::cout << tri->triangleColor.x << "|" << tri->triangleColor.y << "|" << tri->triangleColor.z << std::endl;
-	//		return(tri->triangleColor);
-	//	}
-	//	
-	//}
-	//return(ColorDbl(0, 0, 0));
-	
-	
 }
+
 void Scene::buildScene()
 {
 	//Bottom

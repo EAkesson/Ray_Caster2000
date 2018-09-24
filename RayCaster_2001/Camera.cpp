@@ -75,8 +75,9 @@ void Camera::render(Scene scene)
 		fieldImage[i].intersector = tracer;
 
 		//std::cout << tracer->end.x << tracer->end.y << tracer->end.z << std::endl;
-		ColorDbl cl = scene.triangleScan(tracer);
-		fieldImage[i].pixelColor = cl;
+		//ColorDbl cl = scene.triangleScan(tracer);
+		scene.triangleScan(tracer);
+		fieldImage[i].pixelColor = tracer->currentColor;
 		//DO stuff
 
 		if (i % imageSize == 0 && i != 0)

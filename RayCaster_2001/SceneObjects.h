@@ -6,8 +6,10 @@ class SceneObjects
 {
 public:
 
+	Triangle *triangles;
 
 
+	ColorDbl rayIntersection(Ray *r);
 	 SceneObjects();
 	~SceneObjects();
 };
