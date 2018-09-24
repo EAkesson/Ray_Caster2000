@@ -8,7 +8,7 @@ public:
 	Vertex end;
 
 	ColorDbl currentColor = ColorDbl(0,0,0);
-	float currentDistance = 2000;
+	float currentDistance = MAXILON;
 
 	Ray();
 	Ray(Vertex s, Vertex e);

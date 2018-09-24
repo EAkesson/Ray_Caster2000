@@ -9,7 +9,7 @@ public:
 	Triangle *triangles;
 
 
-	ColorDbl rayIntersection(Ray *r);
+	void rayIntersection(Ray *r);
 	 SceneObjects();
 	~SceneObjects();
 };

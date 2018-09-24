@@ -9,7 +9,7 @@ class Scene
 public:
 
 	Triangle *sceneMesh[24];
-	Tetrahedron *objects;
+	SceneObjects *objects[1];
 
 	void triangleScan(Ray *r);
 

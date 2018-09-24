@@ -12,16 +12,23 @@ Scene::Scene()
 
 void Scene::triangleScan(Ray *r)
 {
-	for each (Triangle *tri in sceneMesh)
+	for each (SceneObjects *sObject in objects)
 	{
-		//TODO check all hit trinagles and choose the closest
-		if (tri->rayIntersection(r)) {
-			//std::cout << tri->triangleColor.x << "|" << tri->triangleColor.y << "|" << tri->triangleColor.z << std::endl;
-			//return(tri->triangleColor);
-			break;
-		}
-		
+		sObject->rayIntersection(r);
 	}
+	if (r->currentDistance == MAXILON) { //Assuming that no object is outside the room. 
+		for each (Triangle *tri in sceneMesh)
+		{
+			//TODO check all hit trinagles and choose the closest
+			if (tri->rayIntersection(r)) {
+				//std::cout << tri->triangleColor.x << "|" << tri->triangleColor.y << "|" << tri->triangleColor.z << std::endl;
+				//return(tri->triangleColor);
+				break;
+			}
+
+		}
+	}
+	
 }
 
 void Scene::buildScene()
@@ -61,7 +68,7 @@ void Scene::buildScene()
 	sceneMesh[22] = new Triangle(Vertex(-3, 0, 5, 0), Vertex(0, 6, 5, 0), Vertex(0, 6, -5, 0), ColorDbl(0.2, 0, 0.3));
 	sceneMesh[23] = new Triangle(Vertex(-3, 0, 5, 0), Vertex(0, 6, -5, 0), Vertex(-3, 0, -5, 0), ColorDbl(0.2, 0, 0.3));
 
-	objects =  new Tetrahedron(Vertex(4, -1, 3, 0), Vertex(5, -2, -1, 0), Vertex(4, 0, -1, 0), Vertex(3, -2, -1, 0), ColorDbl(0.2, 0.3, 1));
+	objects[0] =  new Tetrahedron(Vertex(4, -1, 3, 0), Vertex(5, -2, -1, 0), Vertex(4, 0, -1, 0), Vertex(3, -2, -1, 0), ColorDbl(0.2, 0.3, 1));
 
 }
 
