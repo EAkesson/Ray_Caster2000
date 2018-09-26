@@ -47,7 +47,7 @@ bool Triangle::rayIntersection(Ray * r)
 		if (r->currentDistance > t) {
 			r->currentColor = this->triangleColor;
 			r->currentDistance = t;
-			r->intersectionPoint = r->start + rayVector * t;
+			r->intersectionPoint = (r->start) + Vertex(rayVector,0)*t;
 		}
 		return true;
 	}
@@ -66,7 +66,9 @@ Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint)
 	verticies[1] = v2;
 	verticies[2] = v3;
 	triangleColor = paint;
-	//TODO: Make Normal by vector multiplication
+	normal = glm::cross(glm::fvec3(v2 - v1), glm::fvec3(v3 - v1));
+	normal = glm::normalize(normal);								//normalizing Normal!!
+	
 }
 
 

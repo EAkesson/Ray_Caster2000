@@ -1,5 +1,9 @@
 #include "Ray.h"
 
+ColorDbl Ray::surfaceCollision()
+{
+}
+
 Ray::Ray()
 {
 }
