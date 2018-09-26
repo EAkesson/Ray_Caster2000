@@ -47,6 +47,7 @@ bool Triangle::rayIntersection(Ray * r)
 		if (r->currentDistance > t) {
 			r->currentColor = this->triangleColor;
 			r->currentDistance = t;
+			r->intersectionPoint = r->start + rayVector * t;
 		}
 		return true;
 	}
