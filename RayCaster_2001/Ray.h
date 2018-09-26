@@ -10,12 +10,12 @@ public:
 
 	ColorDbl currentColor = ColorDbl(0,0,0);
 	float currentDistance = MAXILON;
-	Vertex *intersectionPoint = nullptr;
+	Vertex intersectionPoint;
 
 	Ray *parent = nullptr;
 	Ray *reflectedRay = nullptr;
 	Ray *refractedRay = nullptr;
-	Triangle *intersectedNormal = nullptr;
+	Triangle *intersectedTriangle = nullptr;
 
 	ColorDbl surfaceCollision();
 
