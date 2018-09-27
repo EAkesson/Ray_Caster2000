@@ -7,10 +7,11 @@ public:
 
 	//ransparency, re ectivity, colour, 
 
-	float transparency;
+	float opacity;
 	float reflectivity;
 	
 
+	MaterialProperties(float opa, float rect);
 	MaterialProperties();
 	~MaterialProperties();
 };

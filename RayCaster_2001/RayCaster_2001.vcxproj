@@ -147,6 +147,8 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Definitions.h" />
+    <ClInclude Include="Enviroment.h" />
+    <ClInclude Include="MaterialProperties.h" />
     <ClInclude Include="Pixel.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Scene.h" />
@@ -159,6 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Enviroment.cpp" />
+    <ClCompile Include="MaterialProperties.cpp" />
     <ClCompile Include="Pixel.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="RayCaster_2001.cpp" />

@@ -4,7 +4,8 @@
 
 void SceneObjects::rayIntersection(Ray * r)
 {
-	for (int i = 0; i < 4; i++) {
+	for (size_t i = 0; i < numOftriangels; i++)
+	{
 		triangles[i].rayIntersection(r);
 	}
 

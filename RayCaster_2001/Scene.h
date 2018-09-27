@@ -4,12 +4,14 @@
 #include "Ray.h"
 #include "SceneObjects.h"
 #include "Tetrahedron.h"
+#include "Enviroment.h"
+
 class Scene
 {
 public:
 
-	Triangle *sceneMesh[24];
-	SceneObjects *objects[1];
+	//Triangle *sceneMesh[24];
+	SceneObjects *objects[2];
 
 	void triangleScan(Ray *r);
 
