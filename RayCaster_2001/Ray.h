@@ -1,6 +1,9 @@
 #pragma once
 #include "Definitions.h"
 #include "Triangle.h"
+#include "Scene.h"
+class Scene;
+class Triangle;
 class Ray
 {
 public:
@@ -17,7 +20,7 @@ public:
 	Ray *refractedRay = nullptr;
 	Triangle *intersectedTriangle = nullptr;
 
-	ColorDbl surfaceCollision();
+	ColorDbl surfaceCollision(Scene *scene);
 
 	Ray();
 	Ray(Vertex s, Vertex e);

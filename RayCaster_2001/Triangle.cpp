@@ -1,6 +1,21 @@
 #include "Triangle.h"
 
+Triangle::Triangle()
+{
 
+}
+
+Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint, SceneObjects *sO)
+{
+	parent = sO;
+	verticies[0] = v1;
+	verticies[1] = v2;
+	verticies[2] = v3;
+	triangleColor = paint;
+	normal = glm::cross(glm::fvec3(v2 - v1), glm::fvec3(v3 - v1));
+	normal = glm::normalize(normal);								//normalizing Normal!!
+	
+}
 
 bool Triangle::rayIntersection(Ray * r)
 {
@@ -13,12 +28,12 @@ bool Triangle::rayIntersection(Ray * r)
 
 	h = glm::cross(rayVector, edge2);
 	a = glm::dot(edge1, h);
-	if (a > -EPSILON && a < EPSILON) 
+	if (a > -EPSILON && a < EPSILON)
 	{
 		//std::cout << "a too small: " << std::endl;
 		return false;
 	}
-		
+
 
 	f = 1 / a;
 	s = r->start - verticies[0];
@@ -47,30 +62,14 @@ bool Triangle::rayIntersection(Ray * r)
 		if (r->currentDistance > t) {
 			r->currentColor = this->triangleColor;
 			r->currentDistance = t;
-			r->intersectionPoint = (r->start) + Vertex(rayVector,0)*t;
+			r->intersectedTriangle = this;
+			r->intersectionPoint = (r->start) + Vertex(rayVector, 0)*t;
 		}
 		return true;
 	}
 	else // This means that there is a line intersection but not a ray intersection.
 		return false;
 }
-
-Triangle::Triangle()
-{
-
-}
-
-Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint)
-{
-	verticies[0] = v1;
-	verticies[1] = v2;
-	verticies[2] = v3;
-	triangleColor = paint;
-	normal = glm::cross(glm::fvec3(v2 - v1), glm::fvec3(v3 - v1));
-	normal = glm::normalize(normal);								//normalizing Normal!!
-	
-}
-
 
 Triangle::~Triangle()
 {

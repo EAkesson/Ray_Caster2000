@@ -1,15 +1,16 @@
 #pragma once
 #include "Definitions.h"
-#include "Triangle.h"
 #include "Ray.h"
 #include "SceneObjects.h"
-#include "Tetrahedron.h"
+
+class SceneObjects;
+class Ray;
 class Scene
 {
 public:
 
-	Triangle *sceneMesh[24];
-	SceneObjects *objects[1];
+	//Triangle *sceneMesh[24];
+	SceneObjects *objects[2];
 
 	void triangleScan(Ray *r);
 
