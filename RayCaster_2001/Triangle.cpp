@@ -5,9 +5,9 @@ Triangle::Triangle()
 
 }
 
-Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint, SceneObjects* sO)
+Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint, MaterialProperties *sO)
 {
-	parent = sO;
+	parentProp = sO;
 	verticies[0] = v1;
 	verticies[1] = v2;
 	verticies[2] = v3;

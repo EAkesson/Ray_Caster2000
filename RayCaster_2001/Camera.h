@@ -2,6 +2,7 @@
 #include "Definitions.h"
 #include "Pixel.h"
 #include "Scene.h"
+#include "Ray.h"
 
 class Camera
 {

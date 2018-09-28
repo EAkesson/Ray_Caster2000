@@ -1,7 +1,11 @@
 #pragma once
 #include "Definitions.h"
-#include "Triangle.h"
+//#include "Triangle.h"
 #include "Scene.h"
+
+class Triangle;
+class Scene;
+
 class Ray
 {
 public:

@@ -1,6 +1,4 @@
 #include "SceneObjects.h"
-#include "Tetrahedron.h"
-
 
 void SceneObjects::rayIntersection(Ray * r)
 {

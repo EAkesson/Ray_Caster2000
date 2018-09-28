@@ -1,5 +1,4 @@
 #pragma once
-#include "SceneObjects.h"
 #include "Definitions.h"
 class MaterialProperties
 {

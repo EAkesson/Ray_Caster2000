@@ -3,6 +3,10 @@
 #include "Definitions.h"
 #include "MaterialProperties.h"
 
+
+class Ray; //FWD decl
+class Triangle; //FWD decl
+
 class SceneObjects
 {
 public:
