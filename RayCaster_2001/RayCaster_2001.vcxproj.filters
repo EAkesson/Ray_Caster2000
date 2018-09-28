@@ -51,10 +51,10 @@
     <ClInclude Include="SceneObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MaterialProperties.h">
+    <ClInclude Include="Enviroment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enviroment.h">
+    <ClInclude Include="MaterialProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,10 +89,10 @@
     <ClCompile Include="SceneObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialProperties.cpp">
+    <ClCompile Include="Enviroment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Enviroment.cpp">
+    <ClCompile Include="MaterialProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

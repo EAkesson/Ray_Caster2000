@@ -1,4 +1,6 @@
 #include "Scene.h"
+#include "Tetrahedron.h"
+#include "Enviroment.h"
 
 Scene::Scene()
 {
@@ -32,7 +34,7 @@ void Scene::buildScene()
 {
 	
 	objects[0] = new Enviroment();
-	objects[1] =  new Tetrahedron(Vertex(4, -1, 3, 0), Vertex(5, -2, -1, 0), Vertex(4, 0, -1, 0), Vertex(3, -2, -1, 0), ColorDbl(0.2, 0.3, 1));
+	objects[1] = new Tetrahedron(Vertex(4, -1, 3, 0), Vertex(5, -2, -1, 0), Vertex(4, 0, -1, 0), Vertex(3, -2, -1, 0), ColorDbl(0.2, 0.3, 1));
 
 }
 

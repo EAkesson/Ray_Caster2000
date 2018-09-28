@@ -76,9 +76,11 @@ void Camera::render(Scene scene)
 
 		//std::cout << tracer->end.x << tracer->end.y << tracer->end.z << std::endl;
 		//ColorDbl cl = scene.triangleScan(tracer);
-		//scene.triangleScan(tracer);
 
 		fieldImage[i].pixelColor = tracer->surfaceCollision(&scene);
+		/*scene.triangleScan(tracer);
+		fieldImage[i].pixelColor = tracer->currentColor;*/
+
 		//DO stuff
 
 		if (i % imageSize == 0 && i != 0)

@@ -2,16 +2,14 @@
 
 ColorDbl Ray::surfaceCollision(Scene *scene)
 {
-	
-	scene->triangleScan(this);  //Send this ray to scen to check which triangel it hits first. 
+	scene->triangleScan(this);
 
-	if (intersectedTriangle->parentProp->reflectivity == 1) {
-		
+	if (intersectedTriangle->parent->matProp.reflectivity = 1) {
+
 		glm::fvec4 Z = glm::fvec4(intersectedTriangle->normal, 0);
 		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
 		glm::fvec4 Iort = I - (glm::dot(I, Z))*Z;
-
-		glm::fvec4 X = Iort;// / Iort.length;
+		glm::fvec4 X = Iort / glm::length(Iort);
 		glm::fvec4 Y = glm::fvec4(glm::cross(glm::fvec3(-X), glm::fvec3(Z)), 0);
 
 		Vertex modIntersectionPoint = -glm::fvec4(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z, -1);
@@ -25,11 +23,12 @@ ColorDbl Ray::surfaceCollision(Scene *scene)
 
 		reflectedRay = new Ray(intersectionPoint, reflected);
 
-
 		//cloor = reflectedRay->surfaceCollision()*importanw + refractedRay->surfaceCollision * inpofpsofjsoepifj + shadowray*DDD;
+		//return //color;
 		return reflectedRay->surfaceCollision(scene);
 	}
-	else {
+	else 
+	{
 		return this->currentColor;
 	}
 	

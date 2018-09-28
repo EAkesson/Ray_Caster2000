@@ -1,11 +1,9 @@
 #pragma once
 #include "Definitions.h"
+#include "Ray.h"
 #include "SceneObjects.h"
-#include "Tetrahedron.h"
-#include "Enviroment.h"
-
-class Ray;  //FWD decl
 class SceneObjects;
+class Ray;
 
 class Scene
 {

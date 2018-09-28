@@ -1,5 +1,4 @@
 #pragma once
-//#include "Triangle.h"
 #include "Definitions.h"
 #include "SceneObjects.h"
 

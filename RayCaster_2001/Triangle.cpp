@@ -5,9 +5,10 @@ Triangle::Triangle()
 
 }
 
-Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint, MaterialProperties *sO)
+
+Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint, SceneObjects *sO)
 {
-	parentProp = sO;
+	parent = sO;
 	verticies[0] = v1;
 	verticies[1] = v2;
 	verticies[2] = v3;
@@ -62,6 +63,7 @@ bool Triangle::rayIntersection(Ray * r)
 		if (r->currentDistance > t) {
 			r->currentColor = this->triangleColor;
 			r->currentDistance = t;
+			r->intersectedTriangle = this;
 			r->intersectionPoint = (r->start) + Vertex(rayVector, 0)*t;
 		}
 		return true;
@@ -69,7 +71,6 @@ bool Triangle::rayIntersection(Ray * r)
 	else // This means that there is a line intersection but not a ray intersection.
 		return false;
 }
-
 
 Triangle::~Triangle()
 {
