@@ -78,6 +78,7 @@ void Camera::render(Scene scene)
 		//ColorDbl cl = scene.triangleScan(tracer);
 
 		fieldImage[i].pixelColor = tracer->surfaceCollision(&scene);
+		//std::cout << "Tjolahopphop <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>< Nämen tjena sagga" << std::endl;
 		/*scene.triangleScan(tracer);
 		fieldImage[i].pixelColor = tracer->currentColor;*/
 

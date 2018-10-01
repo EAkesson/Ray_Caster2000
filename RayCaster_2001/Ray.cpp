@@ -3,9 +3,8 @@
 ColorDbl Ray::surfaceCollision(Scene *scene)
 {
 	scene->triangleScan(this);
-
-	if (intersectedTriangle->parent->matProp.reflectivity = 1) {
-
+	//std::cout << "??????????????? " << intersectedTriangle->parent->matProp.reflectivity << std::endl;
+	if (intersectedTriangle->parent->matProp.reflectivity == 1) {
 		glm::fvec4 Z = glm::fvec4(intersectedTriangle->normal, 0);
 		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
 		glm::fvec4 Iort = I - (glm::dot(I, Z))*Z;
@@ -20,7 +19,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene)
 		glm::fvec3 Ri = glm::normalize(-I);
 		glm::fvec3 N = glm::normalize(Z);
 		Vertex reflected = Vertex(Ri - 2.0f * N *(glm::dot(Ri, N)), 0);
-
+		//std::cout << "The t-rex is standing behind you || " << start.x << "," << start.y << "," << start.z << std::endl;
 		reflectedRay = new Ray(intersectionPoint, reflected);
 
 		//cloor = reflectedRay->surfaceCollision()*importanw + refractedRay->surfaceCollision * inpofpsofjsoepifj + shadowray*DDD;
@@ -29,6 +28,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene)
 	}
 	else 
 	{
+		//std::cout << "DE DE DE DE DE DE ED DE EDD DE ED È?D Eopfksepifjoeijfioj" << std::endl;
 		return this->currentColor;
 	}
 	
