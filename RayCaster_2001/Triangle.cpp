@@ -13,7 +13,7 @@ Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint, Scene
 	verticies[1] = v2;
 	verticies[2] = v3;
 	triangleColor = paint;
-	normal = glm::cross(glm::fvec3(v2 - v1), glm::fvec3(v3 - v1));
+	normal = glm::cross(glm::fvec3(v3 - v1), glm::fvec3(v2 - v1));
 	normal = glm::normalize(normal);								//normalizing Normal!!
 	
 }

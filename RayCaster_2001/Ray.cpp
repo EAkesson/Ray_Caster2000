@@ -2,12 +2,12 @@
 
 ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 {
-	std::cout << num << std::endl;
+	//std::cout << num << std::endl;
 	scene->triangleScan(this);
-	if (num == 172) {
+	/*if (num == 172) {
 		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
-		std::cout << "??? " << I.x << " " << I.y << " " << I.z << " | " << intersectedTriangle->parent->matProp.reflectivity  << std::endl;
-	}
+		//std::cout << "??? " << I.x << " " << I.y << " " << I.z << " | " << intersectedTriangle->parent->matProp.reflectivity  << std::endl;
+	}*/
 	if (intersectedTriangle->parent->matProp.reflectivity == 1) {
 		glm::fvec4 Z = glm::fvec4(intersectedTriangle->normal, 0);
 		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
@@ -19,7 +19,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 
 		glm::mat4x4  M = glm::mat4(X, Y, Z, glm::fvec4(0, 0, 0, 1)) * glm::mat4(glm::fvec4(1, 0, 0, 0), glm::fvec4(0, 1, 0, 0), glm::fvec4(0, 0, 1, 0), modIntersectionPoint);
 
-		glm::fvec3 Ri = glm::normalize(-I);
+		glm::fvec3 Ri = I;
 		glm::fvec3 N = glm::normalize(Z);
 		Vertex reflected = Vertex(Ri - 2.0f * N *(glm::dot(Ri, N)), 0);
 		//std::cout << "The t-rex is standing behind you || " << start.x << "," << start.y << "," << start.z << std::endl;
