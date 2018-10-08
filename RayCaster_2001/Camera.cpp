@@ -62,7 +62,7 @@ void Camera::render(Scene scene)
 	float pixelSize = 2/ (float)imageSize;
 	float pixelMiddel = pixelSize / 2;
 	float x = 0;
-	float y = -1 + pixelMiddel;
+	float y = 1 - pixelMiddel;
 	float z = 1 + pixelMiddel;
 	Ray *tracer;
 
@@ -77,7 +77,7 @@ void Camera::render(Scene scene)
 		//std::cout << tracer->end.x << tracer->end.y << tracer->end.z << std::endl;
 		//ColorDbl cl = scene.triangleScan(tracer);
 
-		fieldImage[i].pixelColor = tracer->surfaceCollision(&scene);
+		fieldImage[i].pixelColor = tracer->surfaceCollision(&scene, i);
 		//std::cout << "Tjolahopphop <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>< Nämen tjena sagga" << std::endl;
 		/*scene.triangleScan(tracer);
 		fieldImage[i].pixelColor = tracer->currentColor;*/
@@ -86,12 +86,12 @@ void Camera::render(Scene scene)
 
 		if (i % imageSize == 0 && i != 0)
 		{
-			y = -1 + pixelMiddel;
+			y = 1 - pixelMiddel;
 			z -= pixelSize;
 		}
 		else 
 		{
-			y += pixelSize;
+			y -= pixelSize;
 		}
 	}
 }

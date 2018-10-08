@@ -1,9 +1,13 @@
 #include "Ray.h"
 
-ColorDbl Ray::surfaceCollision(Scene *scene)
+ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 {
+	std::cout << num << std::endl;
 	scene->triangleScan(this);
-	//std::cout << "??????????????? " << intersectedTriangle->parent->matProp.reflectivity << std::endl;
+	if (num == 172) {
+		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
+		std::cout << "??? " << I.x << " " << I.y << " " << I.z << " | " << intersectedTriangle->parent->matProp.reflectivity  << std::endl;
+	}
 	if (intersectedTriangle->parent->matProp.reflectivity == 1) {
 		glm::fvec4 Z = glm::fvec4(intersectedTriangle->normal, 0);
 		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
@@ -12,7 +16,6 @@ ColorDbl Ray::surfaceCollision(Scene *scene)
 		glm::fvec4 Y = glm::fvec4(glm::cross(glm::fvec3(-X), glm::fvec3(Z)), 0);
 
 		Vertex modIntersectionPoint = -glm::fvec4(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z, -1);
-
 
 		glm::mat4x4  M = glm::mat4(X, Y, Z, glm::fvec4(0, 0, 0, 1)) * glm::mat4(glm::fvec4(1, 0, 0, 0), glm::fvec4(0, 1, 0, 0), glm::fvec4(0, 0, 1, 0), modIntersectionPoint);
 
@@ -24,7 +27,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene)
 
 		//cloor = reflectedRay->surfaceCollision()*importanw + refractedRay->surfaceCollision * inpofpsofjsoepifj + shadowray*DDD;
 		//return //color;
-		return reflectedRay->surfaceCollision(scene);
+		return reflectedRay->surfaceCollision(scene, num);
 	}
 	else 
 	{

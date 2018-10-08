@@ -21,7 +21,7 @@ public:
 	Ray *refractedRay = nullptr;
 	Triangle *intersectedTriangle = nullptr;
 
-	ColorDbl surfaceCollision(Scene *scene);
+	ColorDbl surfaceCollision(Scene *scene, int num);
 
 	Ray();
 	Ray(Vertex s, Vertex e);
