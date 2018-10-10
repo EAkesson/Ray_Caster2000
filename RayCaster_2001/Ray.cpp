@@ -2,6 +2,7 @@
 
 ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 {
+
 	scene->triangleScan(this);
 
 	if (intersectedTriangle->parent->matProp.isLightSource)
@@ -25,6 +26,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 	}
 	else if (intersectedTriangle->parent->matProp.reflectivity < 1)
 	{
+
 		glm::fvec4 Z = glm::fvec4(intersectedTriangle->normal, 0);
 		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
 		glm::fvec4 Iort = I - (glm::dot(I, Z))*Z;
