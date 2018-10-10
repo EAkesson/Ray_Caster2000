@@ -7,11 +7,12 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 
 	if (intersectedTriangle->parent->matProp.isLightSource)
 	{
+		std::cout << "Lightsource is active";
 		return this->currentColor;
 
 	}else if (intersectedTriangle->parent->matProp.reflectivity == 1) 
 	{
-		
+	
 		glm::fvec3 N = glm::normalize(intersectedTriangle->normal);
 		glm::fvec3 Ri = intersectionPoint - start;
 
@@ -26,7 +27,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 	}
 	else if (intersectedTriangle->parent->matProp.reflectivity < 1)
 	{
-
+		
 		glm::fvec4 Z = glm::fvec4(intersectedTriangle->normal, 0);
 		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
 		glm::fvec4 Iort = I - (glm::dot(I, Z))*Z;
@@ -40,9 +41,30 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 		glm::fvec3 Ri = I;
 		glm::fvec3 N = glm::normalize(Z);
 
+		//shadowray
+		Ray *shadowRay = new Ray(Vertex(5, 0, 5, 0) , intersectionPoint,0);
+
+		scene->triangleScan(shadowRay);
+		if (shadowRay->intersectedTriangle->parent->matProp.isLightSource)
+		{
+			double dt = glm::dot(glm::normalize(glm::vec3(shadowRay->end - shadowRay->start)), N);
+			ColorDbl lightsource = shadowRay->intersectedTriangle->parent->
+		}
+
+
+		if (intersectedTriangle->parent->matProp.RussianRoulette())
+		{
+
+		}else
+		{
+
+		}
+		
+		return this->currentColor;
 	}
 	else 
 	{
+		std::cout << "else statement!";
 		//std::cout << "DE DE DE DE DE DE ED DE EDD DE ED È?D Eopfksepifjoeijfioj" << std::endl;
 		return this->currentColor;
 	}

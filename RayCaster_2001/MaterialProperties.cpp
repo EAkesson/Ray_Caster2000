@@ -8,15 +8,14 @@ MaterialProperties::MaterialProperties(float opa, float rect)
 {
 	//transparency = trans;
 	opacity = 0; //TODO Hardcoded
-	reflectivity = rect; 
-	isLightSource = false;
-}
+	reflectivity = rect;
 
+}
 MaterialProperties::MaterialProperties()
 {
 }
 
-void MaterialProperties::RussianRoulette()
+bool MaterialProperties::RussianRoulette()
 {
 	srand(time(NULL)); // seed my random according to the time ( can be done better by using header <random>)
 	
@@ -24,18 +23,22 @@ void MaterialProperties::RussianRoulette()
 
 	float draw = rand() / (RAND_MAX + 1.);
 
-	if((1-draw) > cutOffProb)
-		//reflect
-
+	if ((1 - draw) > cutOffProb)
+	{
+		return true;
+	}
 	
-	double azimut = (rand() / (RAND_MAX + 1.))*2*M_PI; // generate a random number (0-1) and multiply by 2pi.
-	double incline = (rand() / (RAND_MAX + 1.))*(M_PI/2);
-
-
-	
+	return false;
 
 }
+ double * MaterialProperties::BRDF()
+{
+	srand(time(NULL)); // seed my random according to the time ( can be done better by using header <random>)
+	double * angles = new double[2];
+	angles[0] = (rand() / (RAND_MAX + 1.)) * 2 * M_PI; // generate a random number (0-1) and multiply by 2pi. ~azimuth
+	angles[1] = (rand() / (RAND_MAX + 1.))*(M_PI / 2); //incline 
 
+}
 
 MaterialProperties::~MaterialProperties()
 {

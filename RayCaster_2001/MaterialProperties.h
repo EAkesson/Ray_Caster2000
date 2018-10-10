@@ -8,12 +8,12 @@ public:
 
 	float opacity;
 	float reflectivity;
-	bool isLightSource;
+	bool isLightSource = false;
 	
 
 	MaterialProperties(float opa, float rect);
 	MaterialProperties();
-	void RussianRoulette();
+	bool RussianRoulette();
 	~MaterialProperties();
 };
 
