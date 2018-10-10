@@ -150,6 +150,7 @@
     <ClInclude Include="Enviroment.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MaterialProperties.h" />
+    <ClInclude Include="PartyStructure.h" />
     <ClInclude Include="Pixel.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Scene.h" />
@@ -159,12 +160,14 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tetrahedron.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enviroment.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MaterialProperties.cpp" />
+    <ClCompile Include="PartyStructure.cpp" />
     <ClCompile Include="Pixel.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="RayCaster_2001.cpp" />
@@ -174,6 +177,7 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Tetrahedron.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

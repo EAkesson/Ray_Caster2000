@@ -6,13 +6,12 @@ Triangle::Triangle()
 }
 
 
-Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, ColorDbl &paint, SceneObjects *sO)
+Triangle::Triangle(Vertex & v1, Vertex & v2, Vertex & v3, SceneObjects *sO)
 {
 	parent = sO;
 	verticies[0] = v1;
 	verticies[1] = v2;
 	verticies[2] = v3;
-	triangleColor = paint;
 	normal = glm::cross(glm::fvec3(v3 - v1), glm::fvec3(v2 - v1));
 	normal = glm::normalize(normal);								//normalizing Normal!!
 	
@@ -60,8 +59,7 @@ bool Triangle::rayIntersection(Ray * r)
 	{
 		//std::cout << "BIG BOY" << std::endl;
 		//outIntersectionPoint = rayOrigin + rayVector * t;
-		if (r->currentDistance > t) {
-			r->currentColor = this->triangleColor;
+		if (r->currentDistance > t) {			
 			r->currentDistance = t;
 			r->intersectedTriangle = this;
 			r->intersectionPoint = (r->start) + Vertex(rayVector, 0)*t;

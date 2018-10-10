@@ -8,15 +8,14 @@ class SceneObjects;
 class Triangle
 {
 public:
-	Vertex verticies[3];
-	ColorDbl triangleColor;
+	Vertex verticies[3];	
 	Direction normal;
 	SceneObjects *parent;
 
 	bool rayIntersection(Ray *r);
 
 	Triangle();
-	Triangle(Vertex &v1, Vertex &v2, Vertex &v3, ColorDbl &paint, SceneObjects *sO);
+	Triangle(Vertex &v1, Vertex &v2, Vertex &v3, SceneObjects *sO);
 	~Triangle();
 };
 
