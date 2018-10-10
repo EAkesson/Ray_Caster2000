@@ -74,13 +74,9 @@ void Camera::render(Scene scene)
 		tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0));
 		fieldImage[i].intersector = tracer;
 
-		//std::cout << tracer->end.x << tracer->end.y << tracer->end.z << std::endl;
-		//ColorDbl cl = scene.triangleScan(tracer);
-
-		fieldImage[i].pixelColor = tracer->surfaceCollision(&scene, i);
-		//std::cout << "Tjolahopphop <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>< Nämen tjena sagga" << std::endl;
-		/*scene.triangleScan(tracer);
-		fieldImage[i].pixelColor = tracer->currentColor;*/
+		
+		ColorDbl cl = tracer->surfaceCollision(&scene, i);			
+		fieldImage[i].pixelColor = cl;
 
 		//DO stuff
 
