@@ -1,12 +1,12 @@
-#include "light.h"
+#include "Light.h"
 
 
 
-light::light()
+Light::Light()
 {
 }
 
-light::light(Vertex & v1, Vertex & v2, Vertex & v3, Vertex & v4, ColorDbl & d, float & watt)
+Light::Light(Vertex & v1, Vertex & v2, Vertex & v3, Vertex & v4, ColorDbl & d, float watt)
 {
 	
 	numOfTriangles = 2;
@@ -18,9 +18,14 @@ light::light(Vertex & v1, Vertex & v2, Vertex & v3, Vertex & v4, ColorDbl & d, f
 	triangles[0] = Triangle(v1, v4, v2, d, this);
 	triangles[1] = Triangle(v4, v3, v2, d, this);
 	
+   /*4---------3
+     |         |
+     |         |
+     |         |
+     1---------2*/
 }
 
 
-light::~light()
+Light::~Light()
 {
 }
