@@ -70,6 +70,7 @@ void Camera::render(Scene scene)
 	for (int i = 0; i < amountOfPixel; i++)
 	{
 		
+		fieldImage[i].pixelColor = ColorDbl(0, 0, 0);
 		
 		tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0));
 		fieldImage[i].intersector = tracer;
