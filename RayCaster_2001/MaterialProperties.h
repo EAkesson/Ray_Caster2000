@@ -14,6 +14,7 @@ public:
 	MaterialProperties(float opa, float rect);
 	MaterialProperties();
 	bool RussianRoulette();
+	float * BRDF();
 	~MaterialProperties();
 };
 
