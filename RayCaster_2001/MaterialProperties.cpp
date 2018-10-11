@@ -1,6 +1,8 @@
 #include "MaterialProperties.h"
 #include <stdlib.h>
 #include <ctime>
+#include <chrono>
+#include <random>
 
 
 
@@ -22,8 +24,15 @@ bool MaterialProperties::RussianRoulette()
 	
 	float cutOffProb = 0.25;
 
-	float draw = rand() / (RAND_MAX + 1.);
+	float draw = rand() / (RAND_MAX + 1);
 
+	// obtain a seed from the system clock:
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::mt19937 generator(seed);  // mt19937 is a standard mersenne_twister_engine
+	std::uniform_real_distribution<double> unif(0, 1);
+	draw = unif(generator);
+
+	//std::cout << "DRAW: " << draw << std::endl;
 	if ((1 - draw) > cutOffProb)
 	{
 		return true;

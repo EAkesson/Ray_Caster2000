@@ -14,7 +14,6 @@ Tetrahedron::Tetrahedron(Vertex &v1, Vertex &v2, Vertex &v3, Vertex &v4, ColorDb
 	matProp.reflectivity = 1;
 	matProp.color = d;
 
-
 	triangles[0] = Triangle(v1, v3, v4, this);
 	triangles[1] = Triangle(v1, v2, v3, this);
 	triangles[2] = Triangle(v1, v4, v2, this);

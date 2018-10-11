@@ -15,7 +15,7 @@ public:
 	ColorDbl currentColor = ColorDbl(0,0,0);
 	float currentDistance = MAXILON;
 	Vertex intersectionPoint;
-	float importance;
+	double importance;
 
 	Ray *parent = nullptr;
 	Ray *reflectedRay = nullptr;

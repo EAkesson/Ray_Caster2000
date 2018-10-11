@@ -73,11 +73,12 @@ void Camera::render(Scene scene)
 		fieldImage[i].pixelColor = ColorDbl(0, 0, 0);
 		
 		tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0), 1);
-		fieldImage[i].intersector = tracer;
-
+		fieldImage[i].intersector = tracer;		
 		
 		ColorDbl cl = tracer->surfaceCollision(&scene, i);			
 		fieldImage[i].pixelColor = cl;
+		//std::cout << "Color:" << cl.r << "|" << cl .g << "|" << cl.b << std::endl;
+		std::cout << "---------------------------------------------" << std::endl;
 
 		//DO stuff
 
