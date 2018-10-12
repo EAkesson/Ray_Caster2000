@@ -52,6 +52,7 @@ void Camera::createImage()
 		if (glm::length(fieldImage[i].pixelColor) > glm::length(iMax))
 			iMax = fieldImage[i].pixelColor;
 	}
+	iMax = ColorDbl(2, 2, 2);
 
 	convertColorLinear(iMax);
 }
@@ -63,7 +64,7 @@ void Camera::render(Scene scene)
 	float pixelMiddel = pixelSize / 2;
 	float x = 0;
 	float y = 1 - pixelMiddel;
-	float z = 1 + pixelMiddel;
+	float z = 1 - pixelMiddel;
 	Ray *tracer;
 
 
@@ -80,12 +81,9 @@ void Camera::render(Scene scene)
 
 		delete tracer; // garbage collection
 		fieldImage[i].pixelColor = cl;
-		/*std::cout << "Color:" << cl.r << "|" << cl .g << "|" << cl.b << std::endl;
-		std::cout << "---------------------------------------------" << std::endl;*/
+	
 
-		//DO stuff
-
-		if (i % imageSize == 0 && i != 0)
+		if ((i+1) % imageSize == 0 && i != 0)
 		{
 			y = 1 - pixelMiddel;
 			z -= pixelSize;

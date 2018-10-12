@@ -7,7 +7,7 @@
 class Camera
 {
 public:
-	const static int imageSize = 800;
+	const static int imageSize = 400;
 
 	const static int amountOfPixel = imageSize * imageSize;
 	Vertex eyePoint[2] = { Vertex(-2.0f, 0.0f, 0.0f, 0.0f), Vertex(-1.0f, 0.0f, 0.0f, 0.0f) };
