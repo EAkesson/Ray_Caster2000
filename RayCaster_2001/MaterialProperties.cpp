@@ -46,12 +46,7 @@ bool MaterialProperties::RussianRoulette()
 	 unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	 std::mt19937 generator(seed);  // mt19937 is a standard mersenne_twister_engine
 	 
-
-	 
-	//srand(time(NULL)); // seed my random according to the time ( can be done better by using header <random>)
 	float * angles = new float[2];
-	//angles[0] = (rand() / (RAND_MAX + 1.)) * 2 * M_PI; // generate a random number (0-1) and multiply by 2pi. ~azimuth
-	//angles[1] = (rand() / (RAND_MAX + 1.))*(M_PI / 2); //incline 
 	std::uniform_real_distribution<double> unif(EPSILON, 2 * M_PI - EPSILON);
 	angles[0] = unif(generator);
 	std::uniform_real_distribution<double> unife(EPSILON, M_PI/2 - EPSILON);

@@ -40,8 +40,8 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 		reflectedRay = new Ray(intersectionPoint, reflected, importance);
 
 		//std::cout << "The t-rex is standing behind you || " << start.x << "," << start.y << "," << start.z << std::endl;
-
-		return reflectedRay->surfaceCollision(scene, num);
+		return currentColor + reflectedRay->surfaceCollision(scene, num);
+		
 	}
 	else if (intersectedTriangle->parent->matProp.reflectivity < 1)
 	{
@@ -67,6 +67,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 			double yLocal = sin(newAngles[0])*sin(newAngles[1]);
 			double zLocal = cos(newAngles[1]);
 
+			delete newAngles;									// garbage collection
 			glm::fvec4 localCoords = glm::fvec4(xLocal, yLocal, zLocal,0);
 
 			
@@ -80,11 +81,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 
 			glm::fvec4 globalCoords = MI * localCoords;
 
-			/*glm::fvec4 test = (glm::dot(globalCoords, Z))*Z;
-			test = glm::normalize(test);
-			if (-test == Z) {
-				std::cout << "im in the upside down" << std::endl;
-			}*/
+			
 
 			Vertex forwardVertex = globalCoords;//Vertex(globalCoords.x*0.1, globalCoords.y*0.1, globalCoords.z*0.1,0);
 
@@ -92,7 +89,6 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 
 			//intersectedTriangle->parent->matProp.color = lightContribution;		  // setting the new color at this particular point
 			
-
 			return currentColor + reflectedRay->surfaceCollision(scene, num) * reflectedRay->importance;
 
 
@@ -121,4 +117,8 @@ Ray::Ray(Vertex s, Vertex e, float in)
 
 Ray::~Ray()
 {
+
+	delete reflectedRay;
+	
+	delete refractedRay;
 }

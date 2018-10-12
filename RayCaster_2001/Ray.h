@@ -17,7 +17,7 @@ public:
 	Vertex intersectionPoint;
 	double importance;
 
-	Ray *parent = nullptr;
+	//Ray *parent = nullptr;
 	Ray *reflectedRay = nullptr;
 	Ray *refractedRay = nullptr;
 	Triangle *intersectedTriangle = nullptr;
