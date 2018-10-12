@@ -29,7 +29,6 @@ void Scene::triangleScan(Ray *r)
 	//		}
 	//	}
 	//}
-	
 }
 
 void Scene::buildScene()
@@ -45,7 +44,7 @@ void Scene::buildScene()
 	objects[7] = new PartyStructure(false, ColorDbl(1, 1, 1));
 
 	objects[8] = new Tetrahedron(Vertex(4, -1, 3, 0), Vertex(5, -2, -1, 0), Vertex(3, -2, -1, 0), Vertex(4, 0, -1, 0), ColorDbl(0.2, 0.3, 1));
-	objects[9] = new Light(Vertex(4, -1, 5, 0), Vertex(6, -1, 5, 0), Vertex(6, 1, 5, 0), Vertex(4, 1, 5, 0), ColorDbl(1,1,1), 100.0f);
+	objects[9] = new Light(Vertex(4, -1, 4.99, 0), Vertex(6, -1, 4.99, 0), Vertex(6, 1, 4.99, 0), Vertex(4, 1, 4.99, 0), ColorDbl(2,2,2), 100.0f);
 
 }
 

@@ -77,8 +77,8 @@ void Camera::render(Scene scene)
 		
 		ColorDbl cl = tracer->surfaceCollision(&scene, i);			
 		fieldImage[i].pixelColor = cl;
-		//std::cout << "Color:" << cl.r << "|" << cl .g << "|" << cl.b << std::endl;
-		std::cout << "---------------------------------------------" << std::endl;
+		/*std::cout << "Color:" << cl.r << "|" << cl .g << "|" << cl.b << std::endl;
+		std::cout << "---------------------------------------------" << std::endl;*/
 
 		//DO stuff
 
