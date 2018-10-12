@@ -52,9 +52,9 @@ bool MaterialProperties::RussianRoulette()
 	float * angles = new float[2];
 	//angles[0] = (rand() / (RAND_MAX + 1.)) * 2 * M_PI; // generate a random number (0-1) and multiply by 2pi. ~azimuth
 	//angles[1] = (rand() / (RAND_MAX + 1.))*(M_PI / 2); //incline 
-	std::uniform_real_distribution<double> unif(0, 2 * M_PI);
+	std::uniform_real_distribution<double> unif(EPSILON, 2 * M_PI - EPSILON);
 	angles[0] = unif(generator);
-	std::uniform_real_distribution<double> unife(0, M_PI/2);
+	std::uniform_real_distribution<double> unife(EPSILON, M_PI/2 - EPSILON);
 	angles[1] = unife(generator);
 
 	//std::cout << angles[0] << "|" << angles[1] << std::endl;

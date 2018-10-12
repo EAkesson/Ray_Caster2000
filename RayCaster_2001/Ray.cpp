@@ -9,7 +9,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 	
 	if (intersectedTriangle->parent->matProp.isLightSource)
 	{
-		std::cout << "Lightsource is active";
+		
 		return intersectedTriangle->parent->matProp.color * importance;
 	}
 
@@ -50,30 +50,14 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 		glm::fvec4 Z = glm::fvec4(intersectedTriangle->normal, 0);
 		glm::fvec4 I = intersectionPoint - start; //ray from camera to point
 		glm::fvec4 Iort = I - (glm::dot(I, Z))*Z;
-		glm::fvec4 X = Iort / glm::length(Iort);
+		glm::fvec4 X = glm::normalize(Iort);/// glm::length(Iort)
 		glm::fvec4 Y = glm::fvec4(glm::cross(glm::fvec3(-X), glm::fvec3(Z)), 0);
 
-		Vertex modIntersectionPoint = -glm::fvec4(intersectionPoint.x, intersectionPoint.y, intersectionPoint.z, -1);
+		Vertex modIntersectionPoint = glm::fvec4(-intersectionPoint.x, -intersectionPoint.y, -intersectionPoint.z, 1);
 
 		glm::mat4x4  M = glm::mat4(X, Y, Z, glm::fvec4(0, 0, 0, 1)) * glm::mat4(glm::fvec4(1, 0, 0, 0), glm::fvec4(0, 1, 0, 0), glm::fvec4(0, 0, 1, 0), modIntersectionPoint);
 
-		glm::fvec3 Ri = I;
-		glm::fvec3 N = glm::normalize(Z);
-
-		//shadowray
-		Ray *shadowRay = new Ray(this->intersectionPoint, Vertex(5, 0, 5, 0), 0);		//hardcoded middle of lightsource
-		ColorDbl lightContribution = ColorDbl(glm::dvec3(0.4, 0.4, 0.4));				// Gets information from the shadowray later
 		
-		scene->triangleScan(shadowRay);
-		if (shadowRay->intersectedTriangle != nullptr && shadowRay->intersectedTriangle->parent->matProp.isLightSource)
-		{
-			double dt = glm::dot(glm::normalize(glm::vec3(shadowRay->end - shadowRay->start)), N);
-			lightContribution = shadowRay->intersectedTriangle->parent->matProp.color * dt * this->intersectedTriangle->parent->matProp.color;
-
-
-		}		
-
-		currentColor = lightContribution;		  // setting the new color at this particular point
 
 		if (intersectedTriangle->parent->matProp.RussianRoulette())
 		{
@@ -85,25 +69,36 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 
 			glm::fvec4 localCoords = glm::fvec4(xLocal, yLocal, zLocal,0);
 
+			
+			
+				//std::cout << "X :" << localCoords.x << " Y :" << localCoords.y << "Z :" <<  localCoords.z << std::endl;
+			
+
 			//calculate inverse transofrm matrix
 
 			glm::mat4x4  MI = glm::inverse(M);
 
 			glm::fvec4 globalCoords = MI * localCoords;
 
+			/*glm::fvec4 test = (glm::dot(globalCoords, Z))*Z;
+			test = glm::normalize(test);
+			if (-test == Z) {
+				std::cout << "im in the upside down" << std::endl;
+			}*/
+
 			Vertex forwardVertex = globalCoords;//Vertex(globalCoords.x*0.1, globalCoords.y*0.1, globalCoords.z*0.1,0);
 
-			reflectedRay = new Ray(intersectionPoint, forwardVertex, importance*1.33*intersectedTriangle->parent->matProp.reflectivity); //injecting more importance since to compensate for RR (1/0.75)
+			reflectedRay = new Ray(intersectionPoint + (globalCoords - intersectionPoint)*0.0001f, forwardVertex, importance*1.33*intersectedTriangle->parent->matProp.reflectivity); //injecting more importance since to compensate for RR (1/0.75)
 
 			//intersectedTriangle->parent->matProp.color = lightContribution;		  // setting the new color at this particular point
 			
 
-			return currentColor + reflectedRay->surfaceCollision(scene, num)* this->importance;
+			return currentColor + reflectedRay->surfaceCollision(scene, num) * reflectedRay->importance;
 
 
 		}else
 		{
-			return (currentColor * this->importance); // stack up importance from stack
+			return (currentColor ); // stack up importance from stack
 		}
 		
 		
