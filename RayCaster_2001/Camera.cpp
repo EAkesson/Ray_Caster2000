@@ -1,5 +1,7 @@
 #include "Camera.h"
 #include <fstream>
+#include <chrono>
+#include <random>
 
 
 
@@ -52,7 +54,7 @@ void Camera::createImage()
 		if (glm::length(fieldImage[i].pixelColor) > glm::length(iMax))
 			iMax = fieldImage[i].pixelColor;
 	}
-	iMax = ColorDbl(2, 2, 2);
+	//iMax = ColorDbl(2, 2, 2);
 
 	convertColorLinear(iMax);
 }
@@ -70,16 +72,48 @@ void Camera::render(Scene scene)
 
 	for (int i = 0; i < amountOfPixel; i++)
 	{
-		
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+		std::mt19937 generator(seed); 
+
 		fieldImage[i].pixelColor = ColorDbl(0, 0, 0);
+
+		ColorDbl cl = ColorDbl(0, 0, 0);
+
+		if (superSampling)
+		{
+			ColorDbl sum = ColorDbl(0, 0, 0);							  //temporary array for mean value calca
+			double _y, _z;
+
+			for (int j = 0; j < sampelingRays; j++)
+			{
+				std::uniform_real_distribution<double> unif(-pixelMiddel, pixelMiddel);
+				_y = unif(generator);
+				_z = unif(generator);
+
+				tracer = new Ray(eyePoint[activeEye], Vertex(x, y + _y, z + _z, 0), 1);
+
+				sum += tracer->surfaceCollision(&scene, i);
+
+				delete tracer; // garbage collection
+
+			}
+			cl = sum /sampelingRays;
+
+		}
+		else
+		{
+
+			tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0), 1);
+	
+			 cl = tracer->surfaceCollision(&scene, i);
+
+			delete tracer; // garbage collection
 		
-		tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0), 1);
-		fieldImage[i].intersector = tracer;		
+		}
 
 		
-		ColorDbl cl = tracer->surfaceCollision(&scene, i);	
 
-		delete tracer; // garbage collection
+		 // implement mean
 		fieldImage[i].pixelColor = cl;
 	
 

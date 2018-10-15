@@ -9,7 +9,6 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 	
 	if (intersectedTriangle->parent->matProp.isLightSource)
 	{
-		
 		return intersectedTriangle->parent->matProp.color * importance;
 	}
 
