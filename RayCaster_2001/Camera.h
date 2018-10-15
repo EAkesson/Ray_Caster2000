@@ -7,7 +7,10 @@
 class Camera
 {
 public:
-	const static int imageSize = 21;
+
+	const static int imageSize = 100;
+	bool superSampling = true;
+	double sampelingRays = 4;
 
 	const static int amountOfPixel = imageSize * imageSize;
 	Vertex eyePoint[2] = { Vertex(-2.0f, 0.0f, 0.0f, 0.0f), Vertex(-1.0f, 0.0f, 0.0f, 0.0f) };
