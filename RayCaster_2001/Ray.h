@@ -22,10 +22,10 @@ public:
 	Ray *refractedRay = nullptr;
 	Triangle *intersectedTriangle = nullptr;
 
-	ColorDbl surfaceCollision(Scene *scene, int num);
-
 	Ray();
 	Ray(Vertex s, Vertex e, float in);
+	ColorDbl surfaceCollision(Scene *scene, int num);
+	ColorDbl shadowRay(Scene *sc);
 	~Ray();
 };
 

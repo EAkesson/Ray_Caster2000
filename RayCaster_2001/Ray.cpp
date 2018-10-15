@@ -1,10 +1,21 @@
 #include "Ray.h"
 
+Ray::Ray()
+{
+}
+
+Ray::Ray(Vertex s, Vertex e, float in)
+{
+	start = s;
+	end = e;
+	importance = in;
+}
+
 ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 {
 
 	scene->triangleScan(this);
-	//std::cout << "Color:" << intersectedTriangle->parent->matProp.color.r << "|" << intersectedTriangle->parent->matProp.color.g << "|" << intersectedTriangle->parent->matProp.color.b << std::endl;
+	std::cout << "Color:" << intersectedTriangle->parent->matProp.color.r << "|" << intersectedTriangle->parent->matProp.color.g << "|" << intersectedTriangle->parent->matProp.color.b << " || " << intersectedTriangle->parent->matProp.isLightSource << std::endl;
 	//std::cout << "The t-rex is standing behind you || " << this->importance << std::endl;
 	
 	if (intersectedTriangle->parent->matProp.isLightSource)
@@ -13,20 +24,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 		return intersectedTriangle->parent->matProp.color * importance;
 	}
 
-	//shadowray
-	Ray *shadowRay = new Ray(this->intersectionPoint + glm::vec4((intersectedTriangle->normal*0.1f),0), Vertex(5.5, 0, 4.99, 0), 0);		//hardcoded middle of lightsource
-	ColorDbl lightContribution = ColorDbl(glm::dvec3(0.0, 0.0, 0.0));				// Gets information from the shadowray later
-
-	scene->triangleScan(shadowRay);
-	if (shadowRay->intersectedTriangle != nullptr && shadowRay->intersectedTriangle->parent->matProp.isLightSource)
-	{	
-		glm::fvec3 N = glm::normalize(intersectedTriangle->normal);		//Dont need to norm...
-		double dt = glm::dot(glm::normalize(glm::vec3(shadowRay->end - shadowRay->start)), N);
-		
-		lightContribution = shadowRay->intersectedTriangle->parent->matProp.color * dt * this->intersectedTriangle->parent->matProp.color;
-	}
-
-	currentColor = lightContribution;	
+	currentColor = this->shadowRay(scene);
 
 
 	if (intersectedTriangle->parent->matProp.reflectivity == 1) 
@@ -40,7 +38,7 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 		reflectedRay = new Ray(intersectionPoint, reflected, importance);
 
 		//std::cout << "The t-rex is standing behind you || " << start.x << "," << start.y << "," << start.z << std::endl;
-		return currentColor + reflectedRay->surfaceCollision(scene, num);
+		return (currentColor + (reflectedRay->surfaceCollision(scene, num)));
 		
 	}
 	else if (intersectedTriangle->parent->matProp.reflectivity < 1)
@@ -85,16 +83,16 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 
 			Vertex forwardVertex = globalCoords;//Vertex(globalCoords.x*0.1, globalCoords.y*0.1, globalCoords.z*0.1,0);
 
-			reflectedRay = new Ray(intersectionPoint + (globalCoords - intersectionPoint)*0.0001f, forwardVertex, importance*1.33*intersectedTriangle->parent->matProp.reflectivity); //injecting more importance since to compensate for RR (1/0.75)
+			reflectedRay = new Ray(intersectionPoint + (globalCoords - intersectionPoint)*0.0001f, forwardVertex, this->importance*intersectedTriangle->parent->matProp.reflectivity*1.33); //injecting more importance since to compensate for RR (1/0.75)
 
 			//intersectedTriangle->parent->matProp.color = lightContribution;		  // setting the new color at this particular point
 			
-			return currentColor + reflectedRay->surfaceCollision(scene, num) * reflectedRay->importance;
+			return currentColor*(1.0- intersectedTriangle->parent->matProp.reflectivity) + reflectedRay->surfaceCollision(scene, num) * reflectedRay->importance;
 
 
 		}else
 		{
-			return (currentColor ); // stack up importance from stack
+			return (currentColor); // stack up importance from stack
 		}
 		
 		
@@ -104,15 +102,27 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 
 }
 
-Ray::Ray()
-{
-}
+ColorDbl Ray::shadowRay(Scene *sc) {
+	//shadowray
+	Ray *shadowRay = new Ray(this->intersectionPoint + glm::vec4((intersectedTriangle->normal*0.1f), 0), Vertex(5.5, 0, 4.99, 0), 0);		//hardcoded middle of lightsource
+	ColorDbl lightContribution = ColorDbl(glm::dvec3(0.0, 0.0, 0.0));				// Gets information from the shadowray later
 
-Ray::Ray(Vertex s, Vertex e, float in)
-{
-	start = s;
-	end = e;
-	importance = in;
+	sc->triangleScan(shadowRay);
+	if (shadowRay->intersectedTriangle != nullptr && shadowRay->intersectedTriangle->parent->matProp.isLightSource)
+	{
+		glm::fvec3 N = intersectedTriangle->normal;		//Dont need to norm...
+		double dt = glm::dot(glm::normalize(glm::vec3(shadowRay->end - shadowRay->start)), N);
+		std::cout << dt << std::endl;
+		if (dt < 0) {
+			dt = -1 * dt;
+		}
+		lightContribution = shadowRay->intersectedTriangle->parent->matProp.color * dt * this->intersectedTriangle->parent->matProp.color;
+	}
+
+	/*std::cout << "Color: " << lightContribution.x << " | " << lightContribution.y << " | " << lightContribution.z << std::endl;*/
+
+	return lightContribution;
+
 }
 
 Ray::~Ray()
