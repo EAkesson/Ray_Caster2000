@@ -1,8 +1,11 @@
 #pragma once
 #include "Definitions.h"
-class Sphere
+#include "SceneObjects.h"
+class Sphere : public SceneObjects
 {
 public:
+
+
 	Sphere();
 	~Sphere();
 };
