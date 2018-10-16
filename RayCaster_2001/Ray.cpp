@@ -31,13 +31,13 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 	if (intersectedTriangle->parent->matProp.reflectivity == 0) {
 		return (currentColor); //???
 	}
-
-	currentColor = this->checkDirectLightInPoint(scene) * this->intersectedTriangle->parent->matProp.color;
+	ColorDbl directLight = this->checkDirectLightInPoint(scene);
+	currentColor = directLight * this->intersectedTriangle->parent->matProp.color; //we need to take direct light times X marks the spot
 
 	if (intersectedTriangle->parent->matProp.reflectivity == 1) 
 	{		
 		reflectedRay = this->createPerfectReflectedRay();
-		return (currentColor + (reflectedRay->surfaceCollision(scene, num)));		
+		return (directLight + (reflectedRay->surfaceCollision(scene, num)));		
 	}
 	else if (intersectedTriangle->parent->matProp.reflectivity < 1)
 	{
@@ -78,14 +78,18 @@ ColorDbl Ray::shadowRay(Scene *sc, Vertex pointInLight) {
 
 	sc->triangleScan(shadowRay);
 	if (shadowRay->intersectedTriangle != nullptr && shadowRay->intersectedTriangle->parent->matProp.isLightSource)
-	{
+	{	
+		
 		glm::fvec3 N = intersectedTriangle->normal;		//Dont need to norm...
 		double dt = glm::dot(glm::normalize(glm::vec3(shadowRay->end - shadowRay->start)), N);
 		//std::cout << dt << std::endl;
 		if (dt < 0) {
 			dt = -1 * dt;
 		}
-		lightContribution = shadowRay->intersectedTriangle->parent->matProp.color * dt / 3.0;		
+
+			lightContribution = shadowRay->intersectedTriangle->parent->matProp.color * dt / 3.0;
+		
+	
 	}
 	//std::cout << shadowRay;
 	delete shadowRay;

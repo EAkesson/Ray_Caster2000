@@ -8,7 +8,7 @@ class Camera
 {
 public:
 
-	const static int imageSize = 100;
+	const static int imageSize = 250;
 	bool superSampling = true;
 	double sampelingRays = 4;
 
