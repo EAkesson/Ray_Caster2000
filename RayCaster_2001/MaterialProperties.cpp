@@ -20,11 +20,10 @@ MaterialProperties::MaterialProperties()
 
 bool MaterialProperties::RussianRoulette()
 {
-	srand(time(NULL)); // seed my random according to the time ( can be done better by using header <random>)
+	//srand(time(NULL)); // seed my random according to the time ( can be done better by using header <random>)
 	
 	float cutOffProb = 0.25;
-
-	float draw = rand() / (RAND_MAX + 1);
+	float draw;// = rand() / (RAND_MAX + 1);
 
 	// obtain a seed from the system clock:
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();

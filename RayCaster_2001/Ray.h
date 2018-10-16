@@ -25,7 +25,13 @@ public:
 	Ray();
 	Ray(Vertex s, Vertex e, float in);
 	ColorDbl surfaceCollision(Scene *scene, int num);
-	ColorDbl shadowRay(Scene *sc);
+	ColorDbl checkDirectLightInPoint(Scene * sc);
+	ColorDbl shadowRay(Scene * sc, Vertex pointInLight);
+	Ray * createPerfectReflectedRay();
+	Ray* createReflectedRay();
+	glm::mat4x4 getInverseTransformMatrix();
+
+	glm::mat4x4 getTransformMatrix();
 	~Ray();
 };
 

@@ -8,7 +8,7 @@
 
 Camera::Camera()
 {
-	std::cout << "im here once" << std::endl;
+	std::cout << "Init camera" << std::endl;
 	fieldImage = new Pixel[amountOfPixel];
 }
 
@@ -21,7 +21,7 @@ void Camera::convertColorLinear(ColorDbl iMax)
 	if (iMax.z == 0)
 		iMax.z = EPSILON;
 
-	std::cout << "im here once" << std::endl;
+	std::cout << "linearColorBuild" << std::endl;
 
 	std::ofstream img("awesomepic.ppm");
 	img << "P3" << std::endl;
