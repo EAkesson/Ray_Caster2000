@@ -10,7 +10,7 @@ class Scene
 public:
 
 	//Triangle *sceneMesh[24];
-	SceneObjects *objects[10];
+	SceneObjects *objects[11];
 
 	void triangleScan(Ray *r); //TODO rename
 
