@@ -14,8 +14,7 @@ Ray::Ray(Vertex s, Vertex e, float in)
 }
 
 ColorDbl Ray::surfaceCollision(Scene *scene, int num)
-{
-
+{	
 	scene->triangleScan(this);
 	//std::cout << "Color:" << intersectedTriangle->parent->matProp.color.r << "|" << intersectedTriangle->parent->matProp.color.g << "|" << intersectedTriangle->parent->matProp.color.b << " || " << intersectedTriangle->parent->matProp.isLightSource << std::endl;
 	//std::cout << "The t-rex is standing behind you || " << this->importance << std::endl;
@@ -37,14 +36,22 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 	if (intersectedTriangle->parent->matProp.reflectivity == 1) 
 	{		
 		reflectedRay = this->createPerfectReflectedRay();
-		return (directLight + (reflectedRay->surfaceCollision(scene, num)));		
+		if (num < 3) {
+			//return (directLight + (reflectedRay->surfaceCollision(scene, num + 1)))/2.0;
+			return (directLight/3.0 + (reflectedRay->surfaceCollision(scene, num + 1)));
+		}
+		else {
+			std::cout << "it happend" << std::endl;
+			return directLight;
+		}
+		
 	}
 	else if (intersectedTriangle->parent->matProp.reflectivity < 1)
 	{
 		if (intersectedTriangle->parent->matProp.RussianRoulette())
 		{
 			reflectedRay = this->createReflectedRay();			
-			return currentColor*(1.0- intersectedTriangle->parent->matProp.reflectivity) + reflectedRay->surfaceCollision(scene, num) * reflectedRay->importance;
+			return currentColor*(1.0- intersectedTriangle->parent->matProp.reflectivity) + reflectedRay->surfaceCollision(scene, 0) * reflectedRay->importance;
 		}else
 		{
 			return (currentColor); // stack up importance from stack

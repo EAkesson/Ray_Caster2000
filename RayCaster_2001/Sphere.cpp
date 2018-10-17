@@ -8,7 +8,7 @@ Sphere::Sphere()
 	triangles = new Triangle[numOfTriangles];
 	matProp.opacity = 1;
 	matProp.reflectivity = 1.0;
-	matProp.color = ColorDbl(0,1,0);
+	matProp.color = ColorDbl(0.3,0.3,0.3);
 
 	/*******************Construction*******************/
 

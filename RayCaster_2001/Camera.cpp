@@ -54,9 +54,9 @@ void Camera::createImage()
 	double RGBmax = findLargestRGB();
 	if (RGBmax == 0) {
 		RGBmax = EPSILON;
-	}
+	}	
 
-	std::cout << "linearColorBuild" << std::endl;
+	std::cout << RGBmax << std::endl;
 
 	std::ofstream img("awesomepic.ppm");
 	img << "P3" << std::endl;
@@ -110,7 +110,7 @@ void Camera::render(Scene scene)
 
 				tracer = new Ray(eyePoint[activeEye], Vertex(x, y + _y, z + _z, 0), 1);
 
-				sum += tracer->surfaceCollision(&scene, i);
+				sum += tracer->surfaceCollision(&scene, 0);
 
 				delete tracer; // garbage collection
 
@@ -121,7 +121,7 @@ void Camera::render(Scene scene)
 		else
 		{
 			tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0), 1);
-			cl = tracer->surfaceCollision(&scene, i);
+			cl = tracer->surfaceCollision(&scene, 0);
 			delete tracer; // garbage collection		
 		}		
 
