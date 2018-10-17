@@ -12,14 +12,49 @@ Camera::Camera()
 	fieldImage = new Pixel[amountOfPixel];
 }
 
-void Camera::convertColorLinear(ColorDbl iMax)
+double Camera::findLargestRGB() {
+
+	double RGBmax = EPSILON;
+	//find the maximum intensity
+	for (int i = 0; i < amountOfPixel; i++)
+	{
+		if (fieldImage[i].pixelColor.r > RGBmax) {
+			RGBmax = fieldImage[i].pixelColor.r;
+		}
+		if (fieldImage[i].pixelColor.g > RGBmax) {
+			RGBmax = fieldImage[i].pixelColor.g;
+		}
+		if (fieldImage[i].pixelColor.b > RGBmax) {
+			RGBmax = fieldImage[i].pixelColor.b;
+		}
+
+	}
+	return RGBmax;
+}
+
+Pixel* Camera::convertColorExpo() {
+	Pixel *convertedFieldImage = new Pixel[amountOfPixel];
+
+	for (size_t i = 0; i < amountOfPixel; i++)
+	{
+		convertedFieldImage[i].pixelColor = glm::sqrt(fieldImage[i].pixelColor);
+	}
+
+	return convertedFieldImage;
+}
+
+void Camera::createImage()
 {
-	if (iMax.x == 0)
-		iMax.x = EPSILON;
-	if (iMax.y == 0)
-		iMax.y = EPSILON;
-	if (iMax.z == 0)
-		iMax.z = EPSILON;
+	std::cout << "Start to create image" << std::endl;
+
+	if (useSquareColorCorr) {
+		fieldImage = convertColorExpo();
+	}
+
+	double RGBmax = findLargestRGB();
+	if (RGBmax == 0) {
+		RGBmax = EPSILON;
+	}
 
 	std::cout << "linearColorBuild" << std::endl;
 
@@ -30,33 +65,16 @@ void Camera::convertColorLinear(ColorDbl iMax)
 
 	for (int i = 0; i < amountOfPixel; i++)
 	{
-			//fieldImage[i].pixelColor = ColorDbl(i^3 /(i+1), (i+i / 2 *( i+1)), (i / 3 * (i+1))); //Only to feed with fake pixel data
-			
-			ColorDbl temp;
-			temp = fieldImage[i].pixelColor * (255.99 / iMax);
-			//std::cout << iMax.x << "|" << iMax.y << "|" << iMax.z << std::endl;
-			img << temp.x << " " << temp.y << " " << temp.z << std::endl;
+		//fieldImage[i].pixelColor = ColorDbl(i^3 /(i+1), (i+i / 2 *( i+1)), (i / 3 * (i+1))); //Only to feed with fake pixel data
+
+		ColorDbl temp;
+		//temp = fieldImage[i].pixelColor * (255.99 / iMax);
+		temp.r = fieldImage[i].pixelColor.r * (255.99 / RGBmax);
+		temp.g = fieldImage[i].pixelColor.g * (255.99 / RGBmax);
+		temp.b = fieldImage[i].pixelColor.b * (255.99 / RGBmax);
+		//std::cout << iMax.x << "|" << iMax.y << "|" << iMax.z << std::endl;
+		img << temp.r << " " << temp.g << " " << temp.b << std::endl;
 	}
-
-}
-
-void Camera::convertColorExpo()
-{
-}
-
-void Camera::createImage()
-{
-	ColorDbl iMax = { EPSILON,EPSILON,EPSILON };
-	//find the maximum intensity
-	for (int i = 0; i < amountOfPixel; i++)
-	{
-		//std::cout << glm::length(fieldImage[i].pixelColor) << " | " << glm::length(iMax) << std::endl;
-		if (glm::length(fieldImage[i].pixelColor) > glm::length(iMax))
-			iMax = fieldImage[i].pixelColor;
-	}
-	//iMax = ColorDbl(2, 2, 2);
-
-	convertColorLinear(iMax);
 }
 
 void Camera::render(Scene scene)
@@ -102,21 +120,14 @@ void Camera::render(Scene scene)
 		}
 		else
 		{
-
 			tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0), 1);
-	
-			 cl = tracer->surfaceCollision(&scene, i);
-
-			delete tracer; // garbage collection
-		
-		}
-
-		
+			cl = tracer->surfaceCollision(&scene, i);
+			delete tracer; // garbage collection		
+		}		
 
 		 // implement mean
 		fieldImage[i].pixelColor = cl;
 	
-
 		if ((i+1) % imageSize == 0 && i != 0)
 		{
 			y = 1 - pixelMiddel;
