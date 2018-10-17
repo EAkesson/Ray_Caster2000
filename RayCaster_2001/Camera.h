@@ -8,9 +8,10 @@ class Camera
 {
 public:
 
-	const static int imageSize = 250;
+	const static int imageSize = 200;
 	bool superSampling = true;
-	double sampelingRays = 4;
+	double sampelingRays = 3;
+	bool useSquareColorCorr = true;
 
 	const static int amountOfPixel = imageSize * imageSize;
 	Vertex eyePoint[2] = { Vertex(-2.0f, 0.0f, 0.0f, 0.0f), Vertex(-1.0f, 0.0f, 0.0f, 0.0f) };
@@ -18,16 +19,11 @@ public:
 
 	int activeEye = 1; // activate eyePoint 0 by default
 
-	//Pixel fieldImage[imageSize][imageSize];
 	Pixel *fieldImage;
 
-	//glm::vec3 picture[imageSize][imageSize];
-
-	Camera();
-
-	void convertColorLinear(ColorDbl iMax);
-	void convertColorExpo();
-
+	Camera();		
+	double findLargestRGB();
+	Pixel* convertColorExpo();	
 	void createImage();
 	void render(Scene scene);
 

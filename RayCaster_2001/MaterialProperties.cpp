@@ -32,7 +32,7 @@ bool MaterialProperties::RussianRoulette()
 	draw = unif(generator);
 
 	//std::cout << "DRAW: " << draw << std::endl;
-	if ((1 - draw) > cutOffProb)
+	if ( draw > cutOffProb)
 	{
 		return true;
 	}
