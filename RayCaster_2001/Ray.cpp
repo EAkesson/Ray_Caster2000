@@ -93,11 +93,9 @@ ColorDbl Ray::shadowRay(Scene *sc, Vertex pointInLight) {
 		if (dt < 0) {
 			dt = -1 * dt;
 		}
-
 			lightContribution = shadowRay->intersectedTriangle->parent->matProp.color * dt / 3.0;
-		
-	
 	}
+
 	//std::cout << shadowRay;
 	delete shadowRay;
 	/*std::cout << "Color: " << lightContribution.x << " | " << lightContribution.y << " | " << lightContribution.z << std::endl;*/

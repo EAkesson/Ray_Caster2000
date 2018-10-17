@@ -13,7 +13,7 @@ public:
 	int numOfTriangles;
 	MaterialProperties matProp;
 
-	void rayIntersection(Ray *r);
+	virtual void rayIntersection(Ray *r);
 	 SceneObjects();
 	~SceneObjects();
 };

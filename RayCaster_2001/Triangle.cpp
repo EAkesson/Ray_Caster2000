@@ -55,8 +55,14 @@ bool Triangle::rayIntersection(Ray * r)
 
 	// At this stage we can compute t to find out where the intersection point is on the line.
 	float t = f * glm::dot(edge2, q);
+	
+
 	if (t > EPSILON) // ray intersection
 	{
+		//converting t to be dependant on normal unit vectors
+
+		//float newt = glm::distance((r->start), (r->start) + Vertex(rayVector, 0)*t) / normalize(rayVector);
+
 		//std::cout << "BIG BOY" << std::endl;
 		//outIntersectionPoint = rayOrigin + rayVector * t;
 		if (r->currentDistance > t) {			
