@@ -102,11 +102,80 @@ Sphere::~Sphere()
 
 void Sphere::rayIntersection(Ray * r)
 {
+	float t0, t1; // solutions for t if the ray intersects 
+	glm::vec3 incomingV = r->end - r->start; //direction
+	incomingV = glm::normalize(incomingV);
+
+		// geometric solution
+	/*
+	glm::vec3 L = center - r->start;
+	float tca = glm::dot(L,incomingV);
+	// if (tca < 0) return; //comment out
+	float d2 = glm::dot(L,L) - tca * tca;
+	if (d2 > (radius*radius)) return;
+	float thc = sqrt((radius*radius) - d2);
+	t0 = tca - thc;
+	t1 = tca + thc;
+	*/
+		// analytic solution
+	
+	glm::vec3 L = r->start - center;
+	float a = glm::dot(incomingV,incomingV);
+	float b = 2 *glm::dot(incomingV,L);
+	float c = glm::dot(L,L) - (radius*radius);
+	if (!solveQuadratic(a, b, c, t0, t1)) return;
+	
+
+	if (t0 > t1) std::swap(t0, t1);
+
+	if (t0 < 0) {
+		t0 = t1; // if t0 is negative, let's use t1 instead 
+		if (t0 < 0) return; // both t0 and t1 are negative 
+	}
+
+	float t = t0;
+
+	Vertex Phit = r->start + Vertex(incomingV, 0)*t;
+	if (r->currentDistance > t)
+	{
+		r->currentDistance = t;
+		/*Fake a triangle*/
+
+			sphereFake = new Triangle(Vertex(6, -1, 3, 0), Vertex(7, -2, -1, 0), Vertex(5, -2, -1, 0), this); //random values
+			sphereFake->normal = getNormal(Phit);
+			r->intersectedTriangle = sphereFake;
+			r->intersectionPoint = (r->start) + Vertex(incomingV, 0)*t; //NOTE: incomingV is normalized
+		}
+
+	return;
+}
+bool Sphere::solveQuadratic(const float & a, const float & b, const float & c, float & x0, float & x1)
+{
+	
+		float discr = b * b - 4 * a * c;
+		if (discr < 0) return false;
+		else if (discr == 0) x0 = x1 = -0.5 * b / a;
+		else {
+			float q = (b > 0) ?
+				-0.5 * (b + sqrt(discr)) :
+				-0.5 * (b - sqrt(discr));
+			x0 = q / a;
+			x1 = c / q;
+		}
+		if (x0 > x1) std::swap(x0, x1);
+
+		return true;
+	
+}
+/*
+
+void Sphere::rayIntersection(Ray * r)
+{
 	//This is pretty straight forward. We just implement the equation given in the CodeOutline
 	
 	glm::vec3 incomingV = r->end - r->start; //direction
 
-	incomingV = glm::normalize(incomingV);
+	incomingV = glm::normalize(incomingV); 
 
 
 	//We calculate the vector from the ray origin to the center of the sphere
@@ -140,6 +209,7 @@ void Sphere::rayIntersection(Ray * r)
 		{
 			r->currentDistance = t;
 			/*Fake a triangle*/
+/*
 			sphereFake = new Triangle(Vertex(6, -1, 3, 0), Vertex(7, -2, -1, 0), Vertex(5, -2, -1, 0), this); //random values
 			sphereFake->normal = getNormal(intPoint);
 			r->intersectedTriangle = sphereFake;
@@ -157,21 +227,19 @@ void Sphere::rayIntersection(Ray * r)
 		{
 			r->currentDistance = t;
 			/*Fake a triangle*/
+/*
 			sphereFake = new Triangle(Vertex(6, -1, 3, 0), Vertex(7, -2, -1, 0), Vertex(5, -2, -1, 0), this); //random values
 			sphereFake->normal = getNormal(intPoint);
 
 			r->intersectedTriangle = sphereFake; 
 			r->intersectionPoint = (r->start) + Vertex(incomingV, 0)*t; //NOTE: incomingV is normalized
 		}
-
-
 		return; //We intersect with the sphere
 	}
-
-
 	return; //We do not
 }
-glm::vec3 Sphere::getNormal(Vertex _center)
+*/
+glm::vec3 Sphere::getNormal(Vertex pHit)
 {
-	return glm::normalize(_center - center); // nromalizing
+	return normalize(pHit - center); // nromalizing
 }

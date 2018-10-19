@@ -57,7 +57,7 @@ void Camera::createImage()
 	}	
 
 	std::cout << RGBmax << std::endl;
-	RGBmax = sqrt(2.0);
+	//RGBmax = sqrt(2.0);
 
 	std::ofstream img("awesomepic.ppm");
 	img << "P3" << std::endl;

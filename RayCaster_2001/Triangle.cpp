@@ -23,8 +23,11 @@ bool Triangle::rayIntersection(Ray * r)
 	glm::fvec3 rayVector, edge1, edge2, h, s, q;
 	float a, f, u, v;
 	rayVector = r->end - r->start;
+	rayVector = normalize(rayVector);
 	edge1 = verticies[1] - verticies[0];
 	edge2 = verticies[2] - verticies[0];
+
+	//normalize(rayVector);
 
 	h = glm::cross(rayVector, edge2);
 	a = glm::dot(edge1, h);
