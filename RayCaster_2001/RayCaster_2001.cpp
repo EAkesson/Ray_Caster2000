@@ -11,7 +11,7 @@ int main()
 	Camera cam = Camera();
 	Scene scene = Scene();	
 	cam.render(scene);
-	cam.createImage();
+	//cam.createImage();
 	//cam.convertColorLinear(ColorDbl(1,1,1));
 
 	

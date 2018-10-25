@@ -8,9 +8,9 @@ class Camera
 {
 public:
 
-	const static int imageSize = 300;
+	const static int imageSize = 500;
 	bool superSampling = true;
-	double sampelingRays = 1;
+	double sampelingRays = 100;
 	bool useSquareColorCorr = true;
 
 	const static int amountOfPixel = imageSize * imageSize;
@@ -21,10 +21,11 @@ public:
 
 	Pixel *fieldImage;
 
-	Camera();		
-	double findLargestRGB();
-	Pixel* convertColorExpo();	
-	void createImage();
+	Camera();
+	void createImage(int i, Pixel * tempFieldImage);
+	double findLargestRGB(Pixel * tempFieldImage);
+	Pixel* convertColorExpo(Pixel * tempFieldImage);
+	//void createImage();
 	void render(Scene scene);
 
 

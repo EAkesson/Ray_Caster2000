@@ -124,7 +124,7 @@ Ray* Ray::createReflectedRay() {
 	glm::fvec4 globalCoords = MI * localCoords;
 	Vertex forwardVertex = globalCoords;//Vertex(globalCoords.x*0.1, globalCoords.y*0.1, globalCoords.z*0.1,0);
 
-	return new Ray(intersectionPoint + (globalCoords - intersectionPoint)*0.001f, forwardVertex, this->importance*intersectedTriangle->parent->matProp.reflectivity*1.33); //injecting more importance since to compensate for RR (1/0.75)
+	return new Ray(intersectionPoint + (globalCoords - intersectionPoint)*0.001f, forwardVertex, this->importance*intersectedTriangle->parent->matProp.reflectivity*2); //injecting more importance since to compensate for RR (1/0.75)
 }
 
 glm::mat4x4 Ray::getInverseTransformMatrix() {
