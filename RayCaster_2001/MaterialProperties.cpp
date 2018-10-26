@@ -22,7 +22,7 @@ bool MaterialProperties::RussianRoulette()
 {
 	//srand(time(NULL)); // seed my random according to the time ( can be done better by using header <random>)
 	
-	float cutOffProb = 0.25;
+	float cutOffProb = 0.5;
 	float draw;// = rand() / (RAND_MAX + 1);
 
 	// obtain a seed from the system clock:

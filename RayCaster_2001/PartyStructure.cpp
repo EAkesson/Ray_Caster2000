@@ -10,7 +10,7 @@ PartyStructure::PartyStructure(bool isRoof, ColorDbl &d)
 {
 	numOfTriangles = 6;
 	triangles = new Triangle[numOfTriangles];
-	matProp.reflectivity = 0.2;
+	matProp.reflectivity = 0.4;
 	matProp.opacity = 1;
 	matProp.color = d;
 

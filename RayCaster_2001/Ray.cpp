@@ -36,13 +36,14 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 	if (intersectedTriangle->parent->matProp.reflectivity == 1) 
 	{		
 		reflectedRay = this->createPerfectReflectedRay();
-		if (num < 3) {
+		if (num < 5) {
 			//std::cout << num << std::endl;
-			return (directLight + (reflectedRay->surfaceCollision(scene, num + 1)))/2.0;
+			//return (directLight + (reflectedRay->surfaceCollision(scene, num + 1)))/2.0;
+			return (directLight*0.3 + (reflectedRay->surfaceCollision(scene, num + 1)*0.7));
 			//return ((directLight*(double)(1/(num+1)) + reflectedRay->surfaceCollision(scene, num + 1))); //trying to devide the 
 		}
 		else {
-			std::cout << "it happend" << std::endl;
+			//std::cout << "it happend" << std::endl;
 			return directLight;
 		}
 		
@@ -82,7 +83,7 @@ ColorDbl Ray::checkDirectLightInPoint(Scene *sc) {
 ColorDbl Ray::shadowRay(Scene *sc, Vertex pointInLight) {
 	//shadowray
 	Ray *shadowRay = new Ray(this->intersectionPoint + glm::vec4((intersectedTriangle->normal*0.1f), 0), pointInLight/*Vertex(5.5, 0, 4.99, 0)*/, 0);		//hardcoded middle of lightsource
-	ColorDbl lightContribution = ColorDbl(glm::dvec3(0.0, 0.0, 0.0));				// Gets information from the shadowray later
+	ColorDbl lightContribution = ColorDbl(glm::dvec3(0.01, 0.01, 0.01)/3.0);				// Gets information from the shadowray later
 
 	sc->triangleScan(shadowRay);
 	if (shadowRay->intersectedTriangle != nullptr && shadowRay->intersectedTriangle->parent->matProp.isLightSource)
@@ -124,7 +125,7 @@ Ray* Ray::createReflectedRay() {
 	glm::fvec4 globalCoords = MI * localCoords;
 	Vertex forwardVertex = globalCoords;//Vertex(globalCoords.x*0.1, globalCoords.y*0.1, globalCoords.z*0.1,0);
 
-	return new Ray(intersectionPoint + (globalCoords - intersectionPoint)*0.001f, forwardVertex, this->importance*intersectedTriangle->parent->matProp.reflectivity*1.33); //injecting more importance since to compensate for RR (1/0.75)
+	return new Ray(intersectionPoint + (globalCoords - intersectionPoint)*0.001f, forwardVertex, this->importance*(1/M_PI)/*intersectedTriangle->parent->matProp.reflectivity*/*2/*1.33*/); //injecting more importance since to compensate for RR (1/0.75)
 }
 
 glm::mat4x4 Ray::getInverseTransformMatrix() {
