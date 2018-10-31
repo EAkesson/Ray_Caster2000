@@ -8,6 +8,7 @@ class Wall : public SceneObjects
 public:
 	Wall();
 	Wall(Vertex &v1, Vertex &v2, Vertex &v3, Vertex &v4, ColorDbl &d);
+	Wall(Vertex & v1, Vertex & v2, Vertex & v3, Vertex & v4, ColorDbl & d, double ref);
 	~Wall();
 };
 

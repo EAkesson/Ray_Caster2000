@@ -6,7 +6,7 @@ Sphere::Sphere(float _radius, Vertex _center, ColorDbl clo)
 	
 	
 	matProp.opacity = 1;
-	matProp.reflectivity = 1.0;
+	matProp.reflectivity = 1.00;
 
 	matProp.color = clo;// ColorDbl(0.3, 0.3, 0.3);
 

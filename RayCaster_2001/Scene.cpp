@@ -40,17 +40,17 @@ void Scene::buildScene()
 	
 	objects[0] = new Wall(Vertex(0, -6, 5, 0), Vertex(-3, 0, 5, 0), Vertex(-3, 0, -5, 0), Vertex(0, -6, -5, 0), ColorDbl(0.1, 0.2, 0.5));
 	objects[1] = new Wall(Vertex(10, -6, 5, 0), Vertex(0, -6, 5, 0), Vertex(0, -6, -5, 0), Vertex(10, -6, -5, 0), ColorDbl(0.6, 0.0, 0.0));
-	objects[2] = new Wall(Vertex(13, 0, 5, 0), Vertex(10, -6, 5, 0), Vertex(10, -6, -5, 0), Vertex(13, 0, -5, 0), ColorDbl(0.9, 0.0, 0.7));
+	objects[2] = new Wall(Vertex(13, 0, 5, 0), Vertex(10, -6, 5, 0), Vertex(10, -6, -5, 0), Vertex(13, 0, -5, 0), ColorDbl(0.9, 0.0, 0.7), 1);
 	objects[3] = new Wall(Vertex(10, 6, 5, 0), Vertex(13, 0, 5, 0), Vertex(13, 0, -5, 0), Vertex(10, 6, -5, 0), ColorDbl(0.9, 1.0, 0.1));
 	objects[4] = new Wall(Vertex(0, 6, 5, 0), Vertex(10, 6, 5, 0), Vertex(10, 6, -5, 0), Vertex(0, 6, -5, 0), ColorDbl(0.0, 1.0, 0.6));
-	objects[5] = new Wall(Vertex(-3, 0, 5, 0), Vertex(0, 6, 5, 0), Vertex(0, 6, -5, 0), Vertex(-3, 0, -5, 0), ColorDbl(0.2, 0, 0.3));
-	objects[6] = new PartyStructure(true, ColorDbl(1, 1, 1));
-	objects[7] = new PartyStructure(false, ColorDbl(1, 1, 1));
+	objects[5] = new Wall(Vertex(-3, 0, 5, 0), Vertex(0, 6, 5, 0), Vertex(0, 6, -5, 0), Vertex(-3, 0, -5, 0), ColorDbl(0.2, 0, 0.3), 0);
+	objects[6] = new PartyStructure(true, ColorDbl(0.5, 0.5, 0.5));
+	objects[7] = new PartyStructure(false, ColorDbl(1.0, 1.0, 1.0));
 
 	//objects[8] = new Tetrahedron(Vertex(7, 1, 3, 0), Vertex(8, 0, -1, 0), Vertex(6, 0, -1, 0), Vertex(7, 2, -1, 0), ColorDbl(0.3, 0.3, 0.3));
-	objects[8] = new Tetrahedron(Vertex(7, -2, 1, 0), Vertex(6, -4, -3, 0), Vertex(4, -1.5, -3, 0), Vertex(6, 0, -3, 0), ColorDbl(0.9, 0.47, 0.11));
-	objects[9] = new Light(Vertex(4, -1, 4.99, 0), Vertex(6, -1, 4.99, 0), Vertex(6, 1, 4.99, 0), Vertex(4, 1, 4.99, 0), ColorDbl(2,2,2), 100.0f);
-	objects[10] = new Sphere(1, Vertex(7, 2, -3, 0), ColorDbl(0.3, 0.3, 0.3)); // radius 1
+	objects[8] = new Tetrahedron(Vertex(5, -2, 1, 0), Vertex(6, -4, -3, 0), Vertex(4, -1.5, -3, 0), Vertex(6, 0, -3, 0), ColorDbl(0.9, 0.47, 0.11));
+	objects[9] = new Light(Vertex(4, -1, 4.99, 0), Vertex(6, -1, 4.99, 0), Vertex(6, 1, 4.99, 0), Vertex(4, 1, 4.99, 0), ColorDbl(4,4,4), 100.0f);
+	objects[10] = new Sphere(1.5, Vertex(7, 2, -3, 0), ColorDbl(0.0, 0.0, 0.0)); // radius 1
 }
 
 Scene::~Scene()

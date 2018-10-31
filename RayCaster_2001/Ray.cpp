@@ -15,6 +15,7 @@ Ray::Ray(Vertex s, Vertex e, float in)
 
 ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 {	
+	//std::cout << importance << std::endl;
 	scene->triangleScan(this);
 	//std::cout << "Color:" << intersectedTriangle->parent->matProp.color.r << "|" << intersectedTriangle->parent->matProp.color.g << "|" << intersectedTriangle->parent->matProp.color.b << " || " << intersectedTriangle->parent->matProp.isLightSource << std::endl;
 	//std::cout << "The t-rex is standing behind you || " << this->importance << std::endl;
@@ -27,24 +28,27 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 	{
 		return intersectedTriangle->parent->matProp.color * importance;
 	}
-	if (intersectedTriangle->parent->matProp.reflectivity == 0) {
-		return (currentColor); //???
-	}
+
 	ColorDbl directLight = this->checkDirectLightInPoint(scene);
-	currentColor = directLight * this->intersectedTriangle->parent->matProp.color; 
+	currentColor = directLight * this->intersectedTriangle->parent->matProp.color;
+
+	if (intersectedTriangle->parent->matProp.reflectivity == 0) {
+		return (currentColor * importance); //???
+	}
 
 	if (intersectedTriangle->parent->matProp.reflectivity == 1) 
 	{		
 		reflectedRay = this->createPerfectReflectedRay();
-		if (num < 5) {
+		if (num < 3) {
 			//std::cout << num << std::endl;
 			//return (directLight + (reflectedRay->surfaceCollision(scene, num + 1)))/2.0;
-			return (directLight*0.3 + (reflectedRay->surfaceCollision(scene, num + 1)*0.7));
+			//return (directLight*0.3 + (reflectedRay->surfaceCollision(scene, num + 1)*0.7));
+			return ((reflectedRay->surfaceCollision(scene, num + 1)));
 			//return ((directLight*(double)(1/(num+1)) + reflectedRay->surfaceCollision(scene, num + 1))); //trying to devide the 
 		}
 		else {
-			//std::cout << "it happend" << std::endl;
-			return directLight;
+			std::cout << "SSHHIIITTTTTUHFODH" << std::endl;
+			return directLight * importance;
 		}
 		
 	}
@@ -53,10 +57,10 @@ ColorDbl Ray::surfaceCollision(Scene *scene, int num)
 		if (intersectedTriangle->parent->matProp.RussianRoulette())
 		{
 			reflectedRay = this->createReflectedRay();			
-			return currentColor*(1.0- intersectedTriangle->parent->matProp.reflectivity) + reflectedRay->surfaceCollision(scene, 0) * reflectedRay->importance;
+			return currentColor*(1.0- intersectedTriangle->parent->matProp.reflectivity) * importance + reflectedRay->surfaceCollision(scene, 0) /** reflectedRay->importance*/;
 		}else
 		{
-			return (currentColor); // stack up importance from stack
+			return (currentColor * importance); // stack up importance from stack
 		}
 	}
 }
@@ -83,7 +87,7 @@ ColorDbl Ray::checkDirectLightInPoint(Scene *sc) {
 ColorDbl Ray::shadowRay(Scene *sc, Vertex pointInLight) {
 	//shadowray
 	Ray *shadowRay = new Ray(this->intersectionPoint + glm::vec4((intersectedTriangle->normal*0.1f), 0), pointInLight/*Vertex(5.5, 0, 4.99, 0)*/, 0);		//hardcoded middle of lightsource
-	ColorDbl lightContribution = ColorDbl(glm::dvec3(0.01, 0.01, 0.01)/3.0);				// Gets information from the shadowray later
+	ColorDbl lightContribution = ColorDbl(glm::dvec3(0.1, 0.1, 0.1)/3.0);				// Gets information from the shadowray later
 
 	sc->triangleScan(shadowRay);
 	if (shadowRay->intersectedTriangle != nullptr && shadowRay->intersectedTriangle->parent->matProp.isLightSource)
@@ -108,24 +112,38 @@ ColorDbl Ray::shadowRay(Scene *sc, Vertex pointInLight) {
 Ray* Ray::createPerfectReflectedRay() {
 	glm::fvec3 N = intersectedTriangle->normal;
 	glm::fvec3 Ri = intersectionPoint - start;
-	Vertex reflected = Vertex(Ri - 2.0f * N *(glm::dot(Ri, N)), 0);	
+	glm::fvec3 norm = N - glm::vec3(start - (0.0f,0.0f,0.0f));
+	Vertex reflected = glm::fvec4((glm::reflect(Ri, N)),0);
+	/*Vertex reflected = Vertex(Ri - 2.0f * N *(glm::dot(Ri, N)), 0);	*/
 
+	if (glm::dot(glm::vec3(reflected - intersectionPoint), N) < 0) {
+		//std::cout << "I'am outside in" << std::endl;
+		reflected = glm::vec4((glm::vec3(reflected) - 2 * glm::dot(glm::vec3(reflected - intersectionPoint), N) * N),0);
+		//reflected = -1.0f * (reflected);
+	}
+	
 	return  new Ray(intersectionPoint +(reflected - intersectionPoint)*0.001f, reflected, importance);;
 }
 
 Ray* Ray::createReflectedRay() {
-	float * newAngles = intersectedTriangle->parent->matProp.BRDF();
+	float *newAngles = intersectedTriangle->parent->matProp.BRDF();
 	double xLocal = cos(newAngles[0])*sin(newAngles[1]);  //assuming that r = 1
 	double yLocal = sin(newAngles[0])*sin(newAngles[1]);
 	double zLocal = cos(newAngles[1]);
 	delete newAngles;									// garbage collection
 
+	glm::fvec3 N = intersectedTriangle->normal;
 	glm::fvec4 localCoords = glm::fvec4(xLocal, yLocal, zLocal, 0);
 	glm::mat4x4  MI = getInverseTransformMatrix();
 	glm::fvec4 globalCoords = MI * localCoords;
-	Vertex forwardVertex = globalCoords;//Vertex(globalCoords.x*0.1, globalCoords.y*0.1, globalCoords.z*0.1,0);
+	Vertex forwardVertex = glm::vec4(glm::normalize(glm::vec3(globalCoords)),0);//Vertex(globalCoords.x*0.1, globalCoords.y*0.1, globalCoords.z*0.1,0);
 
-	return new Ray(intersectionPoint + (globalCoords - intersectionPoint)*0.001f, forwardVertex, this->importance*(1/M_PI)/*intersectedTriangle->parent->matProp.reflectivity*/*2/*1.33*/); //injecting more importance since to compensate for RR (1/0.75)
+	if (glm::dot(glm::vec3(forwardVertex - intersectionPoint), N) < 0) {
+		std::cout << "I'am outside in" << std::endl;
+		forwardVertex = glm::vec4((glm::vec3(forwardVertex) - 2 * glm::dot(glm::vec3(forwardVertex - intersectionPoint), N) * N), 0);		
+	}
+
+	return new Ray(intersectionPoint + (forwardVertex - intersectionPoint)*0.001f, forwardVertex, this->importance*(1/M_PI)*intersectedTriangle->parent->matProp.reflectivity*2/*1.33*/); //injecting more importance since to compensate for RR (1/0.75)
 }
 
 glm::mat4x4 Ray::getInverseTransformMatrix() {
