@@ -8,9 +8,9 @@ class Camera
 {
 public:
 
-	const static int imageSize = 300;
+	const static int imageSize = 200;
 	bool superSampling = true;
-	double sampelingRays = 2;
+	const int sampelingRays = 4;
 	bool useSquareColorCorr = true;
 
 	const static int amountOfPixel = imageSize * imageSize;

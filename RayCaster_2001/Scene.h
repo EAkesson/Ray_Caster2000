@@ -9,6 +9,7 @@ class Scene
 {
 public:
 
+	const int numberOfObjects = 11;
 	//Triangle *sceneMesh[24];
 	SceneObjects *objects[11];
 

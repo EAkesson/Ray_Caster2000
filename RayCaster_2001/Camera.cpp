@@ -2,7 +2,7 @@
 #include <fstream>
 #include <chrono>
 #include <random>
-
+#include <omp.h>
 
 
 
@@ -64,19 +64,24 @@ void Camera::createImage()
 	img << imageSize << " " << imageSize << std::endl;
 	img << "255" << std::endl;
 
-	for (int i = 0; i < amountOfPixel; i++)
-	{
-		//fieldImage[i].pixelColor = ColorDbl(i^3 /(i+1), (i+i / 2 *( i+1)), (i / 3 * (i+1))); //Only to feed with fake pixel data
 
-		ColorDbl temp;
-		//temp = fieldImage[i].pixelColor * (255.99 / iMax);
-		temp.r = fieldImage[i].pixelColor.r * (255.99 / RGBmax);
-		temp.g = fieldImage[i].pixelColor.g * (255.99 / RGBmax);
-		temp.b = fieldImage[i].pixelColor.b * (255.99 / RGBmax);
-		//std::cout << iMax.x << "|" << iMax.y << "|" << iMax.z << std::endl;
-		img << temp.r << " " << temp.g << " " << temp.b << std::endl;
+		
+		for (int i = 0; i < amountOfPixel; i++)
+			{
+				//fieldImage[i].pixelColor = ColorDbl(i^3 /(i+1), (i+i / 2 *( i+1)), (i / 3 * (i+1))); //Only to feed with fake pixel data
+
+				ColorDbl temp;
+				//temp = fieldImage[i].pixelColor * (255.99 / iMax);
+				temp.r = fieldImage[i].pixelColor.r * (255.99 / RGBmax);
+				temp.g = fieldImage[i].pixelColor.g * (255.99 / RGBmax);
+				temp.b = fieldImage[i].pixelColor.b * (255.99 / RGBmax);
+				//std::cout << iMax.x << "|" << iMax.y << "|" << iMax.z << std::endl;
+				img << temp.r << " " << temp.g << " " << temp.b << std::endl;
+			
+			}
 	}
-}
+	
+
 
 void Camera::render(Scene scene)
 {
@@ -89,56 +94,68 @@ void Camera::render(Scene scene)
 	Ray *tracer;
 
 
-	for (int i = 0; i < amountOfPixel; i++)
-	{
-		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-		std::mt19937 generator(seed); 
+		
 
-		fieldImage[i].pixelColor = ColorDbl(0, 0, 0);
-
-		ColorDbl cl = ColorDbl(0, 0, 0);
-
-		if (superSampling)
+		for (int i = 0; i < amountOfPixel; i++)
 		{
-			ColorDbl sum = ColorDbl(0, 0, 0);							  //temporary array for mean value calca
-			double _y, _z;
 
-			for (int j = 0; j < sampelingRays; j++)
+			
+
+			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+			std::mt19937 generator(seed); 
+
+			fieldImage[i].pixelColor = ColorDbl(0, 0, 0);
+
+			ColorDbl cl = ColorDbl(0, 0, 0);
+
+			if (superSampling)
 			{
-				std::uniform_real_distribution<double> unif(-pixelMiddel, pixelMiddel);
-				_y = unif(generator);
-				_z = unif(generator);
+				ColorDbl sum = ColorDbl(0, 0, 0);							  //temporary array for mean value calca
+				double _y, _z;
 
-				tracer = new Ray(eyePoint[activeEye], Vertex(x, y + _y, z + _z, 0), 1);
 
-				sum += tracer->surfaceCollision(&scene, 0);
+				
+					
+				
+					for (int j = 0; j < sampelingRays; j++)
+					{
+						std::uniform_real_distribution<double> unif(-pixelMiddel, pixelMiddel);
+						_y = unif(generator);
+						_z = unif(generator);
 
-				delete tracer; // garbage collection
+						tracer = new Ray(eyePoint[activeEye], Vertex(x, y + _y, z + _z, 0), 1);
+						
+						
+							sum += tracer->surfaceCollision(&scene, 0);
+						
 
+						delete tracer; // garbage collection
+
+					}
+					cl = sum / (double)sampelingRays;
+				
 			}
-			cl = sum /sampelingRays;
+			else
+			{
+				tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0), 1);
+				cl = tracer->surfaceCollision(&scene, 0);
+				delete tracer; // garbage collection		
+			}		
 
-		}
-		else
-		{
-			tracer = new Ray(eyePoint[activeEye], Vertex(x, y, z, 0), 1);
-			cl = tracer->surfaceCollision(&scene, 0);
-			delete tracer; // garbage collection		
-		}		
-
-		 // implement mean
-		fieldImage[i].pixelColor = cl;
+				// implement mean
+			fieldImage[i].pixelColor = cl;
 	
-		if ((i+1) % imageSize == 0 && i != 0)
-		{
-			y = 1 - pixelMiddel;
-			z -= pixelSize;
+			if ((i+1) % imageSize == 0 && i != 0)
+			{
+				y = 1 - pixelMiddel;
+				z -= pixelSize;
+			}
+			else 
+			{
+				y -= pixelSize;
+			}
+		
 		}
-		else 
-		{
-			y -= pixelSize;
-		}
-	}
 }
 
 

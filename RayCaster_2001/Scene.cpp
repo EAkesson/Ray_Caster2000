@@ -14,13 +14,18 @@ Scene::Scene()
 
 void Scene::triangleScan(Ray *r)
 {
-	for each (SceneObjects *sObject in objects)
+	#pragma omp parallel for
+	for (int i = 0 ; i < numberOfObjects; i++) // classic loop structure
 	{
+		objects[i]->rayIntersection(r);
+	}
+		//for each (SceneObjects *sObject in objects)
+		//{
 		
-		sObject->rayIntersection(r);
+			//sObject->rayIntersection(r);
 	
 		
-	}
+		//}
 
 	//if (r->currentDistance == MAXILON) { //Assuming that no object is outside the room. 
 	//	for each (Triangle *tri in sceneMesh)
@@ -43,7 +48,7 @@ void Scene::buildScene()
 	objects[2] = new Wall(Vertex(13, 0, 5, 0), Vertex(10, -6, 5, 0), Vertex(10, -6, -5, 0), Vertex(13, 0, -5, 0), ColorDbl(0.9, 0.0, 0.7), 1);
 	objects[3] = new Wall(Vertex(10, 6, 5, 0), Vertex(13, 0, 5, 0), Vertex(13, 0, -5, 0), Vertex(10, 6, -5, 0), ColorDbl(0.9, 1.0, 0.1));
 	objects[4] = new Wall(Vertex(0, 6, 5, 0), Vertex(10, 6, 5, 0), Vertex(10, 6, -5, 0), Vertex(0, 6, -5, 0), ColorDbl(0.0, 1.0, 0.6));
-	objects[5] = new Wall(Vertex(-3, 0, 5, 0), Vertex(0, 6, 5, 0), Vertex(0, 6, -5, 0), Vertex(-3, 0, -5, 0), ColorDbl(0.2, 0, 0.3), 0);
+	objects[5] = new Wall(Vertex(-3, 0, 5, 0), Vertex(0, 6, 5, 0), Vertex(0, 6, -5, 0), Vertex(-3, 0, -5, 0), ColorDbl(0.2, 0, 0.3),0);
 	objects[6] = new PartyStructure(true, ColorDbl(0.5, 0.5, 0.5));
 	objects[7] = new PartyStructure(false, ColorDbl(1.0, 1.0, 1.0));
 

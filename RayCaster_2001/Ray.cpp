@@ -139,7 +139,7 @@ Ray* Ray::createReflectedRay() {
 	Vertex forwardVertex = glm::vec4(glm::normalize(glm::vec3(globalCoords)),0);//Vertex(globalCoords.x*0.1, globalCoords.y*0.1, globalCoords.z*0.1,0);
 
 	if (glm::dot(glm::vec3(forwardVertex - intersectionPoint), N) < 0) {
-		std::cout << "I'am outside in" << std::endl;
+		//std::cout << "I'am outside in" << std::endl;
 		forwardVertex = glm::vec4((glm::vec3(forwardVertex) - 2 * glm::dot(glm::vec3(forwardVertex - intersectionPoint), N) * N), 0);		
 	}
 
